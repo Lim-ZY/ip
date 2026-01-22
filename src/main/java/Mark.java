@@ -35,17 +35,28 @@ public class Mark {
             String input = br.readLine().trim();
             pw.println(line);
             pw.flush();
-            switch (input) {
-                case "list":
-                    this.tasks.printTasks();
-                    break;
-                case "bye":
-                    this.bye();
-                    this.running = false;
-                    break;
-                default:
-                    this.tasks.addTask(new Task(input));
-                    pw.println("added: " + input);
+            if (input.equals("list")) {
+                this.tasks.printTasks();
+            } else if (input.equals("bye")) {
+                this.bye();
+                this.running = false;
+            } else if (input.startsWith("mark") && input.length() > 5) {
+                int id = Integer.parseInt(input.substring(5)) - 1;
+                if (this.tasks.markDone(id)) {
+                    pw.print("Nice! I've marked this task as done:\n\t");
+                    pw.flush();
+                    this.tasks.printTask(id);
+                }
+            } else if (input.startsWith("unmark") && input.length() > 7) {
+                int id = Integer.parseInt(input.substring(7)) - 1;
+                if (this.tasks.markUndone(id)) {
+                    pw.print("OK, I've marked this task as not done yet:\n\t");
+                    pw.flush();
+                    this.tasks.printTask(id);
+                }
+            } else {
+                this.tasks.addTask(new Task(input));
+                pw.println("added: " + input);
             }
             pw.println(line);
             pw.flush();
