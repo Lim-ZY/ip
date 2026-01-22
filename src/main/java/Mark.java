@@ -35,6 +35,7 @@ public class Mark {
             String input = br.readLine().trim();
             pw.println(line);
             pw.flush();
+
             if (input.equals("list")) {
                 this.tasks.printTasks();
             } else if (input.equals("bye")) {
@@ -55,8 +56,28 @@ public class Mark {
                     this.tasks.printTask(id);
                 }
             } else {
-                this.tasks.addTask(new Task(input));
-                pw.println("added: " + input);
+                if (input.startsWith("todo") && input.length() > 5) {
+                    this.tasks.addTask(new Todo(input.substring(5)));
+                } else if (input.startsWith("deadline") && input.length() > 13 && input.contains("/by")) {
+                    String taskName = input.substring(9, input.indexOf("/by")).trim();
+                    String deadline = input.substring(input.indexOf("/by") + 4);
+                    this.tasks.addTask(new Deadline(taskName, deadline));
+                } else if (input.startsWith("event") && input.length() > 16 &&
+                           input.contains("/from") && input.contains("/to")) {
+                    String taskName = input.substring(6, input.indexOf("/from")).trim();
+                    String from = input.substring(input.indexOf("/from") + 6, input.indexOf("/to")).trim();
+                    String to = input.substring(input.indexOf("/to") + 4);
+                    this.tasks.addTask(new Event(taskName, from, to));
+                } else {
+                    pw.println("Invalid input. Please try again.");
+                    pw.println(line);
+                    pw.flush();
+                    continue;
+                }
+                pw.print("Got it. I've added this task:\n\t");
+                pw.flush();
+                this.tasks.printTask(this.tasks.length() - 1);
+                pw.println("Now you have " + this.tasks.length() + " tasks in the list.");
             }
             pw.println(line);
             pw.flush();
