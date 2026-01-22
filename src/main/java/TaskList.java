@@ -34,6 +34,17 @@ public class TaskList {
         this.printTask(id);
         System.out.print("_____________________________________\n");
     }
+    
+    public void delete(int id) throws MarkException {
+        if (id >= tasks.size() || id < 0) {
+            throw new MarkException("ID not defined. Please try again.");
+        }
+        System.out.print("Noted. I've removed this task:\n\t");
+        this.printTask(id);
+        this.tasks.remove(id);
+        System.out.println("Now you have " + this.tasks.size() + " tasks in the list.");
+        System.out.print("_____________________________________\n");
+    }
 
     public void printTask(int id) {
         System.out.println(this.tasks.get(id).toString());

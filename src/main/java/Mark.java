@@ -69,6 +69,17 @@ public class Mark {
                         }
                         continue;
                     }
+                    case "delete": {
+                        try {
+                            int id = Integer.parseInt(input[1]) - 1;
+                            this.tasks.delete(id);
+                        } catch (MarkException e) {
+                            pw.println(e.getMessage());
+                            pw.println(line);
+                            pw.flush();
+                        }
+                        continue;
+                    }
                     case "todo": {
                         if (input[1].isEmpty()) {
                             pw.println("Oh no... the description of a todo cannot be empty. Please try again.");
