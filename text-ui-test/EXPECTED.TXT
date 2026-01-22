@@ -45,7 +45,7 @@ _____________________________________
 ID not defined. Please try again.
 _____________________________________
 _____________________________________
-Invalid input. Please try again.
+I'm sorry, I don't know what that means :( Please try again.
 _____________________________________
 _____________________________________
 Bye. Hope to see you again soon!
