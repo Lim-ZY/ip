@@ -15,28 +15,27 @@ public class TaskList {
         this.tasks.add(t);
     }
 
-    public boolean markDone(int id) {
-        if (id >= tasks.size()) {
-            System.out.println("ID not defined. Please try again.");
-            return false;
+    public void markDone(int id) throws MarkException{
+        if (id >= tasks.size() || id < 0) {
+            throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markDone();
-        return true;
+        System.out.print("Nice! I've marked this task as done:\n\t");
+        this.printTask(id);
+        System.out.print("_____________________________________\n");
     }
 
-    public boolean markUndone(int id) {
-        if (id >= tasks.size()) {
-            System.out.println("ID not defined. Please try again.");
-            return false;
+    public void markUndone(int id) throws MarkException {
+        if (id >= tasks.size() || id < 0) {
+            throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markUndone();
-        return true;
+        System.out.print("OK, I've marked this task as not done yet:\n\t");
+        this.printTask(id);
+        System.out.print("_____________________________________\n");
     }
 
     public void printTask(int id) {
-        if (id >= tasks.size()) {
-            System.out.println("ID not defined. Please try again.");
-        }
         System.out.println(this.tasks.get(id).toString());
     }
 
@@ -45,5 +44,6 @@ public class TaskList {
         for (Task t : this.tasks) {
             System.out.println(i++ + ". " + t.toString());
         }
+        System.out.print("_____________________________________\n");
     }
 }
