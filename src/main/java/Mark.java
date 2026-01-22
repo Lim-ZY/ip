@@ -5,11 +5,13 @@ import java.io.InputStreamReader;
 
 public class Mark {
     private boolean running;
+    private TaskList tasks;
     private BufferedReader br;
     private PrintWriter pw;
 
     public Mark(boolean running, BufferedReader br, PrintWriter pw) {
         this.running = running;
+        this.tasks = new TaskList();
         this.br = br;
         this.pw = pw;
     }
@@ -32,13 +34,18 @@ public class Mark {
         while (this.running) {
             String input = br.readLine().trim();
             pw.println(line);
+            pw.flush();
             switch (input) {
+                case "list":
+                    this.tasks.printTasks();
+                    break;
                 case "bye":
                     this.bye();
                     this.running = false;
                     break;
                 default:
-                    pw.println(input);
+                    this.tasks.addTask(new Task(input));
+                    pw.println("added: " + input);
             }
             pw.println(line);
             pw.flush();
