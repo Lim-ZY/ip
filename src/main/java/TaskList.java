@@ -2,14 +2,17 @@ import java.util.ArrayList;
 
 public class TaskList {
     private ArrayList<Task> tasks;
-    private int length;
 
     public TaskList() {
         tasks = new ArrayList<>();
     }
 
+    public int length() {
+        return this.tasks.size();
+    }
+
     public void addTask(Task t) {
-        tasks.add(t);
+        this.tasks.add(t);
     }
 
     public boolean markDone(int id) {
