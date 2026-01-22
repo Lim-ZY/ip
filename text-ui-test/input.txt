@@ -7,4 +7,5 @@ unmark 1
 list
 mark 4
 what to do
+delete 3
 bye

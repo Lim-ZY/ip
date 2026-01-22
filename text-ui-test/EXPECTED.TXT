@@ -48,5 +48,10 @@ _____________________________________
 I'm sorry, I don't know what that means :( Please try again.
 _____________________________________
 _____________________________________
+Noted. I've removed this task:
+	[E][X] project meeting (from: Mon 2pm to: 4pm)
+Now you have 2 tasks in the list.
+_____________________________________
+_____________________________________
 Bye. Hope to see you again soon!
 _____________________________________
