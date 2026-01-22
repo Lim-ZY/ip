@@ -30,7 +30,7 @@ public class Mark {
 
     private void run() throws IOException {
         greet();
-        String line = "_____________________________________\n";
+        String line = "_____________________________________";
         while (this.running) {
             String input = br.readLine().trim();
             pw.println(line);
