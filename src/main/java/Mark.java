@@ -38,81 +38,81 @@ public class Mark {
                 pw.flush();
 
                 switch (input[0]) {
-                    case "list": {
-                        this.tasks.printTasks();
-                        continue;
-                    }
-                    case "bye": {
-                        this.bye();
-                        this.running = false;
-                        continue;
-                    }
-                    case "mark": {
-                        try {
-                            int id = Integer.parseInt(input[1]) - 1;
-                            this.tasks.markDone(id);
-                        } catch (MarkException e) {
-                            pw.println(e.getMessage());
-                            pw.println(line);
-                            pw.flush();
-                        }
-                        continue;
-                    }
-                    case "unmark": {
-                        try {
-                            int id = Integer.parseInt(input[1]) - 1;
-                            this.tasks.markUndone(id);
-                        } catch (MarkException e) {
-                            pw.println(e.getMessage());
-                            pw.println(line);
-                            pw.flush();
-                        }
-                        continue;
-                    }
-                    case "delete": {
-                        try {
-                            int id = Integer.parseInt(input[1]) - 1;
-                            this.tasks.delete(id);
-                        } catch (MarkException e) {
-                            pw.println(e.getMessage());
-                            pw.println(line);
-                            pw.flush();
-                        }
-                        continue;
-                    }
-                    case "todo": {
-                        if (input[1].isEmpty()) {
-                            pw.println("Oh no... the description of a todo cannot be empty. Please try again.");
-                            pw.print(line);
-                            pw.flush();
-                        } else {
-                            this.tasks.addTask(new Todo(input[1]));
-                        }
-                        break;
-                    }
-                    case "deadline": {
-                        if (!input[1].contains("/by")) {
-                            throw new MarkException("usage: deadline <task> /by <date>");
-                        }
-                        String taskName = input[1].substring(0, input[1].indexOf("/by")).trim();
-                        String deadline = input[1].substring(input[1].indexOf("/by") + 4);
-                        this.tasks.addTask(new Deadline(taskName, deadline));
-                        break;
-                    }
-                    case "event": {
-                        if (!input[1].contains("/from") || !input[1].contains("/to")) {
-                            throw new MarkException("usage: event <task> /from <date> /to <date>");
-                        }
-                        String taskName = input[1].substring(0, input[1].indexOf("/from")).trim();
-                        String from = input[1].substring(input[1].indexOf("/from") + 6, input[1].indexOf("/to")).trim();
-                        String to = input[1].substring(input[1].indexOf("/to") + 4);
-                        this.tasks.addTask(new Event(taskName, from, to));
-                        break;
-                    }
-                    default: {
-                        throw new MarkException("I'm sorry, I don't know what that means :( Please try again.");
-                    }
+                case "list": {
+                    this.tasks.printTasks();
+                    continue;
                 }
+                case "bye": {
+                    this.bye();
+                    this.running = false;
+                    continue;
+                }
+                case "mark": {
+                    try {
+                        int id = Integer.parseInt(input[1]) - 1;
+                        this.tasks.markDone(id);
+                    } catch (MarkException e) {
+                        pw.println(e.getMessage());
+                        pw.println(line);
+                        pw.flush();
+                    }
+                    continue;
+                }
+                case "unmark": {
+                    try {
+                        int id = Integer.parseInt(input[1]) - 1;
+                        this.tasks.markUndone(id);
+                    } catch (MarkException e) {
+                        pw.println(e.getMessage());
+                        pw.println(line);
+                        pw.flush();
+                    }
+                    continue;
+                }
+                case "delete": {
+                try {
+                        int id = Integer.parseInt(input[1]) - 1;
+                        this.tasks.delete(id);
+                    } catch (MarkException e) {
+                        pw.println(e.getMessage());
+                        pw.println(line);
+                        pw.flush();
+                    }
+                    continue;
+                }
+                case "todo": {
+                    if (input[1].isEmpty()) {
+                        pw.println("Oh no... the description of a todo cannot be empty. Please try again.");
+                        pw.print(line);
+                        pw.flush();
+                    } else {
+                        this.tasks.addTask(new Todo(input[1]));
+                    }
+                    break;
+                }
+                case "deadline": {
+                    if (!input[1].contains("/by")) {
+                        throw new MarkException("usage: deadline <task> /by <date>");
+                    }
+                    String taskName = input[1].substring(0, input[1].indexOf("/by")).trim();
+                    String deadline = input[1].substring(input[1].indexOf("/by") + 4);
+                    this.tasks.addTask(new Deadline(taskName, deadline));
+                    break;
+                }
+                case "event": {
+                    if (!input[1].contains("/from") || !input[1].contains("/to")) {
+                        throw new MarkException("usage: event <task> /from <date> /to <date>");
+                    }
+                    String taskName = input[1].substring(0, input[1].indexOf("/from")).trim();
+                    String from = input[1].substring(input[1].indexOf("/from") + 6, input[1].indexOf("/to")).trim();
+                    String to = input[1].substring(input[1].indexOf("/to") + 4);
+                    this.tasks.addTask(new Event(taskName, from, to));
+                    break;
+                }
+                default: {
+                    throw new MarkException("I'm sorry, I don't know what that means :( Please try again.");
+                }}
+                
                 pw.print("Got it. I've added this task:\n\t");
                 pw.flush();
                 this.tasks.printTask(this.tasks.length() - 1);

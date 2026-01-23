@@ -15,7 +15,7 @@ public class TaskList {
         this.tasks.add(t);
     }
 
-    public void markDone(int id) throws MarkException{
+    public void markDone(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
         }
@@ -34,7 +34,7 @@ public class TaskList {
         this.printTask(id);
         System.out.print("_____________________________________\n");
     }
-    
+
     public void delete(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
