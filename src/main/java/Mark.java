@@ -2,7 +2,8 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Mark {
@@ -95,31 +96,35 @@ public class Mark {
                     break;
                 }
                 case "deadline": {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
                     if (!input[1].contains("/by")) {
-                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD>");
+                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
                     }
                     String deadline = input[1].substring(input[1].indexOf("/by") + 4);
                     String taskName = input[1].substring(0, input[1].indexOf("/by")).trim();
-                    LocalDate date;
+                    LocalDateTime date;
                     try {
-                        date = LocalDate.parse(deadline);
+                        date = LocalDateTime.parse(deadline, dtf);
                     } catch (DateTimeParseException e) {
-                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD>");
+                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
                     }
                     this.tasks.addTask(new Deadline(taskName, date));
                     break;
                 }
                 case "event": {
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
                     if (!input[1].contains("/from") || !input[1].contains("/to")) {
-                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> /to <YYYY-MM-DD>");
+                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
+                                + "/to <YYYY-MM-DD> <HHMM>");
                     }
-                    LocalDate fromDate, toDate;
+                    LocalDateTime fromDate, toDate;
                     try {
-                        fromDate = LocalDate.parse(input[1].substring(input[1].indexOf("/from") + 6,
-                                input[1].indexOf("/to")).trim());
-                        toDate = LocalDate.parse(input[1].substring(input[1].indexOf("/to") + 4));
-                    }  catch (DateTimeParseException e) {
-                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> /to <YYYY-MM-DD>");
+                        fromDate = LocalDateTime.parse(input[1].substring(input[1].indexOf("/from") + 6,
+                                input[1].indexOf("/to")).trim(), dtf);
+                        toDate = LocalDateTime.parse(input[1].substring(input[1].indexOf("/to") + 4), dtf);
+                    } catch (DateTimeParseException e) {
+                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> <HHMM> " 
+                                + "/to <YYYY-MM-DD> <HHMM>");
                     }
                     String taskName = input[1].substring(0, input[1].indexOf("/from")).trim();
                     this.tasks.addTask(new Event(taskName, fromDate, toDate));

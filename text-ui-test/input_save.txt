@@ -1,7 +1,7 @@
 todo hi
 todo bye
-deadline hsi /by 2026-01-30
-event time to eat /from 2026-01-30 /to 2026-01-30
+deadline hsi /by 2026-01-30 1800
+event time to eat /from 2026-01-30 1800 /to 2026-01-30 1900
 mark 1
 mark 3
 list
