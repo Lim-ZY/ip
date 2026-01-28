@@ -28,7 +28,6 @@ public class Storage {
                 sb.append(s.substring(7));
                 sb.append("\n");
             }
-            System.out.println(sb.toString());
             fileWriter.write(sb.toString());
             fileWriter.close();
         } catch (IOException e) {
@@ -49,7 +48,7 @@ public class Storage {
             
             Scanner sc = new Scanner(this.file);
             while (sc.hasNext()) {
-                String[] entry = sc.nextLine().split(" | ");
+                String[] entry = sc.nextLine().split(" \\| ");
                 boolean isDone = entry[1].equals("1") ? true : false;
                 switch (entry[0]) {
                 case "T":
