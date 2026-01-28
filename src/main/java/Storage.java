@@ -58,7 +58,7 @@ public class Storage {
                     this.tasks.add(new Deadline(entry[2], isDone, entry[3]));
                     break;
                 case "E":
-                    String[] fromTo = entry[3].split(" || ");
+                    String[] fromTo = entry[3].split(" \\|\\| ");
                     this.tasks.add(new Event(entry[2], isDone, fromTo[0], fromTo[1]));
                     break;
                 }
