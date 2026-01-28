@@ -25,4 +25,8 @@ public class Task {
         String doneState = this.isDone ? "X" : " ";
         return String.valueOf("[" + doneState + "] " + this.name);
     }
+    
+    public String toSaveString() {
+        return (this.isDone ? "1" : "0") + " | " + this.name;
+    }
 }

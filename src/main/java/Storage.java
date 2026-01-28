@@ -1,7 +1,8 @@
 import java.io.File;
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 public class Storage {
     private File file;
     private List<Task> tasks;
+    private final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
     
     public Storage(String filePath) {
         this.file = new File(filePath);
@@ -20,12 +22,7 @@ public class Storage {
             FileWriter fileWriter = new FileWriter(this.file.getPath());
             StringBuilder sb = new StringBuilder();
             for (Task task : tasks) {
-                String s = task.toString();
-                sb.append(s.charAt(1));
-                sb.append(" | ");
-                sb.append(s.substring(3,6).equals("[ ]") ? 0 : 1);
-                sb.append(" | ");
-                sb.append(s.substring(7));
+                sb.append(task.toSaveString());
                 sb.append("\n");
             }
             fileWriter.write(sb.toString());
@@ -55,11 +52,12 @@ public class Storage {
                     this.tasks.add(new Todo(entry[2], isDone));
                     break;
                 case "D":
-                    this.tasks.add(new Deadline(entry[2], isDone, entry[3]));
+                    this.tasks.add(new Deadline(entry[2], isDone, LocalDateTime.parse(entry[3], Storage.dtf)));
                     break;
                 case "E":
-                    String[] fromTo = entry[3].split(" || ");
-                    this.tasks.add(new Event(entry[2], isDone, fromTo[0], fromTo[1]));
+                    String[] fromTo = entry[3].split(" \\|\\| ");
+                    this.tasks.add(new Event(entry[2], isDone, 
+                            LocalDateTime.parse(fromTo[0], Storage.dtf), LocalDateTime.parse(fromTo[1], Storage.dtf)));
                     break;
                 }
             }
