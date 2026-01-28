@@ -1,10 +1,15 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private List<Task> tasks;
 
     public TaskList() {
-        tasks = new ArrayList<>();
+        this.tasks = new ArrayList<>();
+    }
+    
+    public TaskList(List<Task> tasks) {
+        this.tasks = tasks;
     }
 
     public int length() {
@@ -56,5 +61,9 @@ public class TaskList {
             System.out.println(i++ + ". " + t.toString());
         }
         System.out.print("_____________________________________\n");
+    }
+    
+    public void saveTasks(Storage storage) {
+        storage.save(this.tasks);
     }
 }
