@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,11 @@ public class Storage {
                     this.tasks.add(new Todo(entry[2], isDone));
                     break;
                 case "D":
-                    this.tasks.add(new Deadline(entry[2], isDone, entry[3]));
+                    this.tasks.add(new Deadline(entry[2], isDone, LocalDate.parse(entry[3])));
                     break;
                 case "E":
                     String[] fromTo = entry[3].split(" \\|\\| ");
-                    this.tasks.add(new Event(entry[2], isDone, fromTo[0], fromTo[1]));
+                    this.tasks.add(new Event(entry[2], isDone, LocalDate.parse(fromTo[0]), LocalDate.parse(fromTo[1])));
                     break;
                 }
             }

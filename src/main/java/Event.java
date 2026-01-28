@@ -1,14 +1,16 @@
-public class Event extends Task {
-    String fromDate;
-    String toDate;
+import java.time.LocalDate;
 
-    public Event(String name, String from, String to) {
+public class Event extends Task {
+    LocalDate fromDate;
+    LocalDate toDate;
+
+    public Event(String name, LocalDate from, LocalDate to) {
         super(name);
         this.fromDate = from;
         this.toDate = to;
     }
     
-    public Event(String name, boolean isDone, String from, String to) {
+    public Event(String name, boolean isDone, LocalDate from, LocalDate to) {
         super(name, isDone);
         this.fromDate = from;
         this.toDate = to;

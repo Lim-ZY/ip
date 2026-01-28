@@ -2,6 +2,8 @@ import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Mark {
     private boolean running;
@@ -94,21 +96,33 @@ public class Mark {
                 }
                 case "deadline": {
                     if (!input[1].contains("/by")) {
-                        throw new MarkException("usage: deadline <task> /by <date>");
+                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD>");
                     }
-                    String taskName = input[1].substring(0, input[1].indexOf("/by")).trim();
                     String deadline = input[1].substring(input[1].indexOf("/by") + 4);
-                    this.tasks.addTask(new Deadline(taskName, deadline));
+                    String taskName = input[1].substring(0, input[1].indexOf("/by")).trim();
+                    LocalDate date;
+                    try {
+                        date = LocalDate.parse(deadline);
+                    } catch (DateTimeParseException e) {
+                        throw new MarkException("usage: deadline <task> /by <YYYY-MM-DD>");
+                    }
+                    this.tasks.addTask(new Deadline(taskName, date));
                     break;
                 }
                 case "event": {
                     if (!input[1].contains("/from") || !input[1].contains("/to")) {
-                        throw new MarkException("usage: event <task> /from <date> /to <date>");
+                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> /to <YYYY-MM-DD>");
+                    }
+                    LocalDate fromDate, toDate;
+                    try {
+                        fromDate = LocalDate.parse(input[1].substring(input[1].indexOf("/from") + 6,
+                                input[1].indexOf("/to")).trim());
+                        toDate = LocalDate.parse(input[1].substring(input[1].indexOf("/to") + 4));
+                    }  catch (DateTimeParseException e) {
+                        throw new MarkException("usage: event <task> /from <YYYY-MM-DD> /to <YYYY-MM-DD>");
                     }
                     String taskName = input[1].substring(0, input[1].indexOf("/from")).trim();
-                    String from = input[1].substring(input[1].indexOf("/from") + 6, input[1].indexOf("/to")).trim();
-                    String to = input[1].substring(input[1].indexOf("/to") + 4);
-                    this.tasks.addTask(new Event(taskName, from, to));
+                    this.tasks.addTask(new Event(taskName, fromDate, toDate));
                     break;
                 }
                 default: {
