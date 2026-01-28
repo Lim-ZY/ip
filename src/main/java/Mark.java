@@ -11,7 +11,6 @@ public class Mark {
 
     public Mark(boolean running, BufferedReader br, PrintWriter pw) {
         this.running = running;
-        this.tasks = new TaskList();
         this.br = br;
         this.pw = pw;
     }
@@ -29,6 +28,9 @@ public class Mark {
     }
 
     private void run() throws IOException {
+        Storage storage = new Storage("./data/data.txt");
+        this.tasks = new TaskList(storage.getFileContents());
+        
         greet();
         String line = "_____________________________________";
         while (this.running) {
@@ -43,7 +45,7 @@ public class Mark {
                     continue;
                 }
                 case "bye": {
-                    this.bye();
+                    this.bye(storage);
                     this.running = false;
                     continue;
                 }
@@ -130,17 +132,18 @@ public class Mark {
 
     private void greet() {
         String line = "_____________________________________\n";
-        String logo = "  __  __            _    \n" +
-                " |  \\/  |          | |   \n" +
-                " | \\  / | __ _ _ __| | __\n" +
-                " | |\\/| |/ _` | '__| |/ /\n" +
-                " | |  | | (_| | |  |   < \n" +
-                " |_|  |_|\\__,_|_|  |_|\\_\\\n";
+        String logo = "  __  __            _    \n" 
+                + " |  \\/  |          | |   \n" 
+                + " | \\  / | __ _ _ __| | __\n" 
+                + " | |\\/| |/ _` | '__| |/ /\n" 
+                + " | |  | | (_| | |  |   < \n" 
+                + " |_|  |_|\\__,_|_|  |_|\\_\\\n";
         pw.println(line + "Hello! I'm \n" + logo + "What can I do for you?\n" + line);
         pw.flush();
     }
 
-    private void bye() {
+    private void bye(Storage storage) {
+        this.tasks.saveTasks(storage);
         pw.println("Bye. Hope to see you again soon!");
         pw.flush();
         System.out.print("_____________________________________\n");
