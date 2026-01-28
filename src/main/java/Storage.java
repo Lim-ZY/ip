@@ -39,6 +39,14 @@ public class Storage {
     public List<Task> getFileContents() {
         this.tasks = new ArrayList<>();
         try {
+            File parentDir = this.file.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            if (!this.file.exists()) {
+                this.file.createNewFile();
+            }
+            
             Scanner sc = new Scanner(this.file);
             while (sc.hasNext()) {
                 String[] entry = sc.nextLine().split(" | ");
@@ -56,8 +64,8 @@ public class Storage {
                     break;
                 }
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Could not create file");
         }
         
         return new ArrayList<>(this.tasks);
