@@ -20,12 +20,7 @@ public class Storage {
             FileWriter fileWriter = new FileWriter(this.file.getPath());
             StringBuilder sb = new StringBuilder();
             for (Task task : tasks) {
-                String s = task.toString();
-                sb.append(s.charAt(1));
-                sb.append(" | ");
-                sb.append(s.substring(3,6).equals("[ ]") ? 0 : 1);
-                sb.append(" | ");
-                sb.append(s.substring(7));
+                sb.append(task.toSaveString());
                 sb.append("\n");
             }
             fileWriter.write(sb.toString());

@@ -56,6 +56,10 @@ public class TaskList {
     }
 
     public void printTasks() {
+        if (this.tasks.isEmpty()) {
+            System.out.println("No tasks in the list.");
+            return;
+        }
         int i = 1;
         for (Task t : this.tasks) {
             System.out.println(i++ + ". " + t.toString());
