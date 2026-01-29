@@ -28,7 +28,7 @@ public class Storage {
             fileWriter.write(sb.toString());
             fileWriter.close();
         } catch (IOException e) {
-            System.out.println("File not found");
+            Ui.println("File not found");
         }
     }
     
@@ -62,7 +62,7 @@ public class Storage {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Could not create file");
+            Ui.println("Could not create file");
         }
         
         return new ArrayList<>(this.tasks);

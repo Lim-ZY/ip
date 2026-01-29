@@ -25,9 +25,9 @@ public class TaskList {
             throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markDone();
-        System.out.print("Nice! I've marked this task as done:\n\t");
+        Ui.print("Nice! I've marked this task as done:\n\t");
         this.printTask(id);
-        System.out.print("_____________________________________\n");
+        Ui.printDivider();
     }
 
     public void markUndone(int id) throws MarkException {
@@ -35,36 +35,36 @@ public class TaskList {
             throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markUndone();
-        System.out.print("OK, I've marked this task as not done yet:\n\t");
+        Ui.print("OK, I've marked this task as not done yet:\n\t");
         this.printTask(id);
-        System.out.print("_____________________________________\n");
+        Ui.printDivider();
     }
 
     public void delete(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
         }
-        System.out.print("Noted. I've removed this task:\n\t");
+        Ui.print("Noted. I've removed this task:\n\t");
         this.printTask(id);
         this.tasks.remove(id);
-        System.out.println("Now you have " + this.tasks.size() + " tasks in the list.");
-        System.out.print("_____________________________________\n");
+        Ui.println("Now you have " + this.tasks.size() + " tasks in the list.");
+        Ui.printDivider();
     }
 
     public void printTask(int id) {
-        System.out.println(this.tasks.get(id).toString());
+        Ui.println(this.tasks.get(id).toString());
     }
 
     public void printTasks() {
         if (this.tasks.isEmpty()) {
-            System.out.println("No tasks in the list.");
+            Ui.println("No tasks in the list.");
             return;
         }
         int i = 1;
         for (Task t : this.tasks) {
-            System.out.println(i++ + ". " + t.toString());
+            Ui.println(i++ + ". " + t.toString());
         }
-        System.out.print("_____________________________________\n");
+        Ui.printDivider();
     }
     
     public void saveTasks(Storage storage) {

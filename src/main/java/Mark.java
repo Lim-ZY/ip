@@ -9,38 +9,32 @@ import java.time.format.DateTimeParseException;
 public class Mark {
     private boolean running;
     private TaskList tasks;
-    private BufferedReader br;
-    private PrintWriter pw;
+    private Ui ui;
 
-    public Mark(boolean running, BufferedReader br, PrintWriter pw) {
-        this.running = running;
-        this.br = br;
-        this.pw = pw;
+    public Mark() {
+        this.running = true;
+        this.ui = new Ui();
     }
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        PrintWriter pw = new PrintWriter(System.out);
-        Mark mark = new Mark(true, br, pw);
+    public static void main(String[] args) {
+        Mark mark = new Mark();
         try {
             mark.run();
         } catch (IOException e) {
-            pw.println(e.getMessage());
+            Ui.println(e.getMessage());
         }
-        pw.flush();
     }
 
     private void run() throws IOException {
         Storage storage = new Storage("./data/data.txt");
         this.tasks = new TaskList(storage.getFileContents());
         
-        greet();
-        String line = "_____________________________________";
+        ui.greet();
+        
         while (this.running) {
             try {
-                String[] input = br.readLine().trim().split(" ", 2);
-                pw.println(line);
-                pw.flush();
+                String[] input = ui.readInput();
+                Ui.printDivider();
 
                 switch (input[0]) {
                 case "list": {
@@ -57,9 +51,7 @@ public class Mark {
                         int id = Integer.parseInt(input[1]) - 1;
                         this.tasks.markDone(id);
                     } catch (MarkException e) {
-                        pw.println(e.getMessage());
-                        pw.println(line);
-                        pw.flush();
+                        Ui.printException(e);
                     }
                     continue;
                 }
@@ -68,28 +60,23 @@ public class Mark {
                         int id = Integer.parseInt(input[1]) - 1;
                         this.tasks.markUndone(id);
                     } catch (MarkException e) {
-                        pw.println(e.getMessage());
-                        pw.println(line);
-                        pw.flush();
+                        Ui.printException(e);
                     }
                     continue;
                 }
                 case "delete": {
-                try {
+                    try {
                         int id = Integer.parseInt(input[1]) - 1;
                         this.tasks.delete(id);
                     } catch (MarkException e) {
-                        pw.println(e.getMessage());
-                        pw.println(line);
-                        pw.flush();
+                        Ui.printException(e);
                     }
                     continue;
                 }
                 case "todo": {
                     if (input[1].isEmpty()) {
-                        pw.println("Oh no... the description of a todo cannot be empty. Please try again.");
-                        pw.print(line);
-                        pw.flush();
+                        Ui.println("Oh no... the description of a todo cannot be empty. Please try again.");
+                        Ui.printDivider();
                     } else {
                         this.tasks.addTask(new Todo(input[1]));
                     }
@@ -134,37 +121,18 @@ public class Mark {
                     throw new MarkException("I'm sorry, I don't know what that means :( Please try again.");
                 }}
                 
-                pw.print("Got it. I've added this task:\n\t");
-                pw.flush();
+                Ui.print("Got it. I've added this task:\n\t");
                 this.tasks.printTask(this.tasks.length() - 1);
-                pw.println("Now you have " + this.tasks.length() + " tasks in the list.");
-
-                pw.println(line);
-                pw.flush();
+                Ui.println("Now you have " + this.tasks.length() + " tasks in the list.");
+                Ui.printDivider();
             } catch (MarkException e) {
-                pw.println(e.getMessage());
-                pw.println(line);
-                pw.flush();
+                Ui.printException(e);
             }
         }
     }
 
-    private void greet() {
-        String line = "_____________________________________\n";
-        String logo = "  __  __            _    \n" 
-                + " |  \\/  |          | |   \n" 
-                + " | \\  / | __ _ _ __| | __\n" 
-                + " | |\\/| |/ _` | '__| |/ /\n" 
-                + " | |  | | (_| | |  |   < \n" 
-                + " |_|  |_|\\__,_|_|  |_|\\_\\\n";
-        pw.println(line + "Hello! I'm \n" + logo + "What can I do for you?\n" + line);
-        pw.flush();
-    }
-
     private void bye(Storage storage) {
         this.tasks.saveTasks(storage);
-        pw.println("Bye. Hope to see you again soon!");
-        pw.flush();
-        System.out.print("_____________________________________\n");
+        ui.bye();
     }
 }
