@@ -10,14 +10,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Storage {
+    /** Data file object **/
     private File file;
+    /** Extracted TaskList **/
     private List<Task> tasks;
+    /** Input format of date and time **/
     private final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    
+
+    /**
+     * Returns Storage object.
+     * Pass in path to data file if exists.
+     * 
+     * @param filePath String.
+     */
     public Storage(String filePath) {
         this.file = new File(filePath);
     }
-    
+
+    /**
+     * Saves TaskList into data file.
+     * 
+     * @param tasks List<Task>.
+     */
     public void save(List<Task> tasks) {
         this.tasks = tasks;
         try {
@@ -33,7 +47,15 @@ public class Storage {
             Ui.println("File not found");
         }
     }
-    
+
+    /**
+     * Restores TaskList from previous session.
+     * Returns list of tasks previously saved into data file.
+     * Creates parent directory and file if data file does not exist.
+     * 
+     * @return List<Task>.
+     * @throws IOException if file cannot be created.
+     */
     public List<Task> getFileContents() throws IOException {
         this.tasks = new ArrayList<>();
         File parentDir = this.file.getParentFile();

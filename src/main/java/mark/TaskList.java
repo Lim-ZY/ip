@@ -6,23 +6,45 @@ import java.util.List;
 public class TaskList {
     private List<Task> tasks;
 
+    /**
+     * Returns empty TaskList object.
+     */
     public TaskList() {
         this.tasks = new ArrayList<>();
     }
-    
+
+    /**
+     * Returns loaded TaskList object.
+     * 
+     * @param tasks List of tasks.
+     */
     public TaskList(List<Task> tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Returns length of TaskList.
+     */
     public int length() {
         return this.tasks.size();
     }
 
+    /**
+     * Adds task to TaskList.
+     * 
+     * @param t Task to add.
+     */
     public void addTask(Task t) {
         this.tasks.add(t);
         Ui.printAddedTask(t, this.length());
     }
 
+    /**
+     * Marks task as done.
+     * 
+     * @param id ID of task.
+     * @throws MarkException If ID is invalid.
+     */
     public void markDone(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
@@ -31,6 +53,12 @@ public class TaskList {
         Ui.markDone(this.tasks.get(id));
     }
 
+    /**
+     * Marks task as undone.
+     * 
+     * @param id ID of task.
+     * @throws MarkException If ID is invalid.
+     */
     public void markUndone(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
@@ -39,6 +67,12 @@ public class TaskList {
         Ui.markUndone(this.tasks.get(id));
     }
 
+    /**
+     * Deletes task in TaskList.
+     * 
+     * @param id ID of task to delete.
+     * @throws MarkException If ID is invalid.
+     */
     public void delete(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
@@ -47,6 +81,9 @@ public class TaskList {
         this.tasks.remove(id);
     }
 
+    /**
+     * Prints all tasks in TaskList.
+     */
     public void printTasks() {
         if (this.tasks.isEmpty()) {
             Ui.println("No tasks in the list.");
@@ -58,7 +95,12 @@ public class TaskList {
         }
         Ui.printDivider();
     }
-    
+
+    /**
+     * Passes TaskList to storage for saving.
+     * 
+     * @param storage Storage instance.
+     */
     public void saveTasks(Storage storage) {
         storage.save(this.tasks);
     }

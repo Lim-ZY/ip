@@ -2,6 +2,9 @@ package mark;
 
 import java.io.IOException;
 
+/**
+ * Main entry point
+ */
 public class Mark {
     private boolean running;
     private TaskList tasks;

@@ -5,8 +5,16 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Parser {
+    /** Input format of date and time **/
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    
+
+    /**
+     * Returns executable Command subclasses.
+     * 
+     * @param input User Input
+     * @return Command subclass
+     * @throws InvalidFormatException
+     */
     public static Command parse(String input) throws InvalidFormatException {
         String[] segments = input.trim().split(" ", 2);
         String action = segments[0];
@@ -32,7 +40,14 @@ public class Parser {
             return new UnknownCommand();
         }
     }
-    
+
+    /**
+     * Returns executable DeadlineCommand upon further parsing of input segments.
+     * 
+     * @param segments String[] of user input
+     * @return DeadlineCommand
+     * @throws InvalidFormatException
+     */
     public static Command parseDeadline(String[] segments) throws InvalidFormatException {
         if (!segments[1].contains("/by")) {
             throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
@@ -47,7 +62,14 @@ public class Parser {
         }
         return new DeadlineCommand(taskName, date);
     }
-    
+
+    /**
+     * Returns executable EventCommand upon further parsing of input segments.
+     *
+     * @param segments String[] of user input
+     * @return EventCommand
+     * @throws InvalidFormatException
+     */
     public static Command parseEvent(String[] segments) throws InvalidFormatException {
         if (!segments[1].contains("/from") || !segments[1].contains("/to")) {
             throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
