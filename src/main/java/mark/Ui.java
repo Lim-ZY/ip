@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class Ui {
     private static final PrintWriter pw =  new PrintWriter(System.out);
@@ -113,6 +114,18 @@ public class Ui {
         Ui.printDivider();
     }
 
+    public static void printTasksFound(List<Task> tasks) {
+        StringBuilder sb = new StringBuilder();
+
+        int i = 1;
+        for (Task t: tasks) {
+            sb.append(i++ + ". " + t.toString());
+            sb.append("\n");
+        }
+        Ui.print("Here are the matching tasks in your list:\n" + sb.toString());
+        Ui.printDivider();
+    }
+    
     /**
      * Prints error message if data file could not be loaded.
      */

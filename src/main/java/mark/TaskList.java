@@ -81,6 +81,19 @@ public class TaskList {
         this.tasks.remove(id);
     }
 
+    public List<Task> find(String keyword) throws MarkException {
+        List<Task> result = new ArrayList<>();
+        if (keyword == null || keyword.isEmpty()) {
+            throw new MarkException("Keyword is null or empty.");
+        }
+        for (Task t : this.tasks) {
+            if (t.nameContains(keyword)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
     /**
      * Prints all tasks in TaskList.
      */

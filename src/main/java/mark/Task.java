@@ -40,6 +40,10 @@ public class Task {
         this.isDone = false;
     }
 
+    public boolean nameContains(String keyword) {
+        return this.name.contains(keyword);
+    }
+
     @Override
     public String toString() {
         String doneState = this.isDone ? "X" : " ";

@@ -36,6 +36,8 @@ public class Parser {
             return Parser.parseDeadline(segments);
         case "event":
             return Parser.parseEvent(segments);
+        case "find":
+            return new FindCommand(segments);
         default:
             return new UnknownCommand();
         }
