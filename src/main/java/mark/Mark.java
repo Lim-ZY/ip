@@ -1,3 +1,5 @@
+package mark;
+
 import java.io.IOException;
 
 public class Mark {

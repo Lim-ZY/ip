@@ -1,14 +1,16 @@
-public class MarkCommand extends Command {
+package mark;
+
+public class UnmarkCommand extends Command {
     private final int id;
     
-    public MarkCommand(int id) {
+    public UnmarkCommand(int id) {
         this.id = id;
     }
     
     @Override
     void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
-            tasks.markDone(this.id);
+            tasks.markUndone(this.id);
         } catch (MarkException e) {
             Ui.printException(e);
         }
