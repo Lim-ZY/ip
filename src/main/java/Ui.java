@@ -31,6 +31,10 @@ public class Ui {
     public String[] readInput() throws IOException {
         return Ui.br.readLine().trim().split(" ", 2);
     }
+    
+    public void showLoadingError() {
+        Ui.println("Could not read/create file. Continuing with empty tasklist.");
+    }
 
     public void greet() {
         String logo = "  __  __            _    \n"

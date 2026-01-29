@@ -32,37 +32,33 @@ public class Storage {
         }
     }
     
-    public List<Task> getFileContents() {
+    public List<Task> getFileContents() throws IOException {
         this.tasks = new ArrayList<>();
-        try {
-            File parentDir = this.file.getParentFile();
-            if (parentDir != null && !parentDir.exists()) {
-                parentDir.mkdirs();
+        File parentDir = this.file.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            parentDir.mkdirs();
+        }
+        if (!this.file.exists()) {
+            this.file.createNewFile();
+        }
+        
+        Scanner sc = new Scanner(this.file);
+        while (sc.hasNext()) {
+            String[] entry = sc.nextLine().split(" \\| ");
+            boolean isDone = entry[1].equals("1") ? true : false;
+            switch (entry[0]) {
+            case "T":
+                this.tasks.add(new Todo(entry[2], isDone));
+                break;
+            case "D":
+                this.tasks.add(new Deadline(entry[2], isDone, LocalDateTime.parse(entry[3], Storage.dtf)));
+                break;
+            case "E":
+                String[] fromTo = entry[3].split(" \\|\\| ");
+                this.tasks.add(new Event(entry[2], isDone,
+                        LocalDateTime.parse(fromTo[0], Storage.dtf), LocalDateTime.parse(fromTo[1], Storage.dtf)));
+                break;
             }
-            if (!this.file.exists()) {
-                this.file.createNewFile();
-            }
-            
-            Scanner sc = new Scanner(this.file);
-            while (sc.hasNext()) {
-                String[] entry = sc.nextLine().split(" \\| ");
-                boolean isDone = entry[1].equals("1") ? true : false;
-                switch (entry[0]) {
-                case "T":
-                    this.tasks.add(new Todo(entry[2], isDone));
-                    break;
-                case "D":
-                    this.tasks.add(new Deadline(entry[2], isDone, LocalDateTime.parse(entry[3], Storage.dtf)));
-                    break;
-                case "E":
-                    String[] fromTo = entry[3].split(" \\|\\| ");
-                    this.tasks.add(new Event(entry[2], isDone, 
-                            LocalDateTime.parse(fromTo[0], Storage.dtf), LocalDateTime.parse(fromTo[1], Storage.dtf)));
-                    break;
-                }
-            }
-        } catch (IOException e) {
-            Ui.println("Could not create file");
         }
         
         return new ArrayList<>(this.tasks);
