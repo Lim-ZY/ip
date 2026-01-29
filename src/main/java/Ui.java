@@ -28,8 +28,32 @@ public class Ui {
         Ui.pw.flush();
     }
     
-    public String[] readInput() throws IOException {
-        return Ui.br.readLine().trim().split(" ", 2);
+    public String readInput() throws IOException {
+        String input = Ui.br.readLine();
+        Ui.printDivider();
+        return input;
+    }
+    
+    public static void printAddedTask(Task t, int len) {
+        Ui.println("Got it. I've added this task:\n\t" + t.toString());
+        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.printDivider();
+    }
+    
+    public static void markDone(Task t) {
+        Ui.println("Nice! I've marked this task as done:\n\t" + t.toString());
+        Ui.printDivider();
+    }
+    
+    public static void markUndone(Task t) {
+        Ui.println("OK, I've marked this task as not done yet:\n\t" + t.toString());
+        Ui.printDivider();
+    }
+    
+    public static void printDeletedTask(Task t, int len) {
+        Ui.println("Noted. I've removed this task:\n\t" + t.toString());
+        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.printDivider();
     }
     
     public void showLoadingError() {

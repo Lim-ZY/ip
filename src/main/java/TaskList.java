@@ -18,6 +18,7 @@ public class TaskList {
 
     public void addTask(Task t) {
         this.tasks.add(t);
+        Ui.printAddedTask(t, this.length());
     }
 
     public void markDone(int id) throws MarkException {
@@ -25,9 +26,7 @@ public class TaskList {
             throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markDone();
-        Ui.print("Nice! I've marked this task as done:\n\t");
-        this.printTask(id);
-        Ui.printDivider();
+        Ui.markDone(this.tasks.get(id));
     }
 
     public void markUndone(int id) throws MarkException {
@@ -35,24 +34,15 @@ public class TaskList {
             throw new MarkException("ID not defined. Please try again.");
         }
         this.tasks.get(id).markUndone();
-        Ui.print("OK, I've marked this task as not done yet:\n\t");
-        this.printTask(id);
-        Ui.printDivider();
+        Ui.markUndone(this.tasks.get(id));
     }
 
     public void delete(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
         }
-        Ui.print("Noted. I've removed this task:\n\t");
-        this.printTask(id);
+        Ui.printDeletedTask(this.tasks.get(id),  this.length() - 1);
         this.tasks.remove(id);
-        Ui.println("Now you have " + this.tasks.size() + " tasks in the list.");
-        Ui.printDivider();
-    }
-
-    public void printTask(int id) {
-        Ui.println(this.tasks.get(id).toString());
     }
 
     public void printTasks() {
