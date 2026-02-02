@@ -1,12 +1,16 @@
 package mark;
 
+/**
+ * Represents a general task with a name and done status.
+ * Serves as a superclass for more specific tasks.
+ */
 public class Task {
     private final String name;
     private boolean isDone;
 
     /**
      * Returns Task object.
-     * 
+     *
      * @param name Name of task.
      */
     public Task(String name) {
@@ -17,8 +21,8 @@ public class Task {
     /**
      * Returns Task object.
      * Overloaded constructor for session restore from data file.
-     * 
-     * @param name Name of task.
+     *
+     * @param name   Name of task.
      * @param isDone Status of task.
      */
     public Task(String name, boolean isDone) {

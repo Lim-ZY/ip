@@ -3,6 +3,10 @@ package mark;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a collection of tasks.
+ * Provides methods to add, delete, mark, unmark, and find tasks.
+ */
 public class TaskList {
     private List<Task> tasks;
 
@@ -15,7 +19,7 @@ public class TaskList {
 
     /**
      * Returns loaded TaskList object.
-     * 
+     *
      * @param tasks List of tasks.
      */
     public TaskList(List<Task> tasks) {
@@ -31,7 +35,7 @@ public class TaskList {
 
     /**
      * Adds task to TaskList.
-     * 
+     *
      * @param t Task to add.
      */
     public void addTask(Task t) {
@@ -41,7 +45,7 @@ public class TaskList {
 
     /**
      * Marks task as done.
-     * 
+     *
      * @param id ID of task.
      * @throws MarkException If ID is invalid.
      */
@@ -55,7 +59,7 @@ public class TaskList {
 
     /**
      * Marks task as undone.
-     * 
+     *
      * @param id ID of task.
      * @throws MarkException If ID is invalid.
      */
@@ -69,7 +73,7 @@ public class TaskList {
 
     /**
      * Deletes task in TaskList.
-     * 
+     *
      * @param id ID of task to delete.
      * @throws MarkException If ID is invalid.
      */
@@ -77,10 +81,17 @@ public class TaskList {
         if (id >= tasks.size() || id < 0) {
             throw new MarkException("ID not defined. Please try again.");
         }
-        Ui.printDeletedTask(this.tasks.get(id),  this.length() - 1);
+        Ui.printDeletedTask(this.tasks.get(id), this.length() - 1);
         this.tasks.remove(id);
     }
 
+    /**
+     * Returns a list of tasks with names that matches the keyword.
+     *
+     * @param keyword String.
+     * @return List of tasks.
+     * @throws MarkException if keyword is null or empty.
+     */
     public List<Task> find(String keyword) throws MarkException {
         List<Task> result = new ArrayList<>();
         if (keyword == null || keyword.isEmpty()) {
@@ -111,7 +122,7 @@ public class TaskList {
 
     /**
      * Passes TaskList to storage for saving.
-     * 
+     *
      * @param storage Storage instance.
      */
     public void saveTasks(Storage storage) {

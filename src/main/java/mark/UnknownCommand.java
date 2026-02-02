@@ -1,5 +1,8 @@
 package mark;
 
+/**
+ * Represents a command that is unrecognised.
+ */
 public class UnknownCommand extends Command {
     @Override
     void execute(TaskList tasks, Ui ui, Storage storage) {

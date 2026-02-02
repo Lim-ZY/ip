@@ -3,15 +3,21 @@ package mark;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task with a deadline.
+ */
 public class Deadline extends Task {
-    private LocalDateTime deadline;
-    /** Input format of date and time **/
-    private final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    /**
+     * Input format of date and time
+     **/
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    private final LocalDateTime deadline;
 
     /**
      * Returns Deadline object for the Deadline task.
-     * 
-     * @param name Name of deadline task.
+     *
+     * @param name     Name of deadline task.
      * @param deadline Deadline of task in LocalDateTime object.
      */
     public Deadline(String name, LocalDateTime deadline) {
@@ -23,8 +29,8 @@ public class Deadline extends Task {
      * Returns Deadline object for the Deadline task.
      * Overloaded constructor for session restore from data file.
      *
-     * @param name Name of deadline task.
-     * @param isDone Status of deadline task.
+     * @param name     Name of deadline task.
+     * @param isDone   Status of deadline task.
      * @param deadline Deadline of task in LocalDateTime object.
      */
     public Deadline(String name, boolean isDone, LocalDateTime deadline) {
@@ -34,7 +40,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.deadline.format(Deadline.dtf) + ")";
+        return "[D]" + super.toString() + " (by: " + this.deadline.format(Deadline.FORMAT) + ")";
     }
 
     /**
@@ -42,6 +48,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toSaveString() {
-        return "D | " + super.toSaveString() +  " | " + this.deadline.format(Deadline.dtf);
+        return "D | " + super.toSaveString() + " | " + this.deadline.format(Deadline.FORMAT);
     }
 }

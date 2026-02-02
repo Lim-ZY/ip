@@ -3,18 +3,24 @@ package mark;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents a task that occurs over a specific duration.
+ */
 public class Event extends Task {
-    private LocalDateTime fromDate;
-    private LocalDateTime toDate;
-    /** Input format of date and time **/
-    private final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    /**
+     * Input format of date and time
+     **/
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    private final LocalDateTime fromDate;
+    private final LocalDateTime toDate;
 
     /**
      * Returns Event object for the Event task.
-     * 
+     *
      * @param name Name of Event task.
      * @param from Event start in LocalDateTime object.
-     * @param to Event end in LocalDateTime object.
+     * @param to   Event end in LocalDateTime object.
      */
     public Event(String name, LocalDateTime from, LocalDateTime to) {
         super(name);
@@ -26,10 +32,10 @@ public class Event extends Task {
      * Returns Event object for the Event task.
      * Overloaded constructor for session restore from data file.
      *
-     * @param name Name of Event task.
+     * @param name   Name of Event task.
      * @param isDone Status of Event task.
-     * @param from Event start in LocalDateTime object.
-     * @param to Event end in LocalDateTime object.
+     * @param from   Event start in LocalDateTime object.
+     * @param to     Event end in LocalDateTime object.
      */
     public Event(String name, boolean isDone, LocalDateTime from, LocalDateTime to) {
         super(name, isDone);
@@ -39,8 +45,8 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.fromDate.format(Event.dtf) 
-                + " to: " + this.toDate.format(Event.dtf) + ")";
+        return "[E]" + super.toString() + " (from: " + this.fromDate.format(Event.FORMAT)
+                + " to: " + this.toDate.format(Event.FORMAT) + ")";
     }
 
     /**
@@ -48,7 +54,7 @@ public class Event extends Task {
      */
     @Override
     public String toSaveString() {
-        return "E | " + super.toSaveString() + " | " + this.fromDate.format(Event.dtf) 
-                + " || " + this.toDate.format(Event.dtf);
+        return "E | " + super.toSaveString() + " | " + this.fromDate.format(Event.FORMAT)
+                + " || " + this.toDate.format(Event.FORMAT);
     }
 }

@@ -1,12 +1,15 @@
 package mark;
 
+/**
+ * Represents a command which creates a Todo task in the task list.
+ */
 public class TodoCommand extends Command {
     private final String[] input;
-    
+
     public TodoCommand(String[] input) {
         this.input = input;
     }
-    
+
     @Override
     void execute(TaskList tasks, Ui ui, Storage storage) {
         String todo = input[1];

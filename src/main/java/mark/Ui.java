@@ -6,27 +6,30 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.List;
 
+/**
+ * Handles user interactions and displays intended output.
+ */
 public class Ui {
-    private static final PrintWriter pw =  new PrintWriter(System.out);
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static final PrintWriter PW = new PrintWriter(System.out);
+    private static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Prints divider line.
      */
     public static void printDivider() {
-        Ui.pw.println("_____________________________________");
-        Ui.pw.flush();
+        Ui.PW.println("_____________________________________");
+        Ui.PW.flush();
     }
 
     /**
      * Prints String s with a newline using PrintWriter.
      * PrintWriter println wrapper.
-     * 
+     *
      * @param s String.
      */
     public static void println(String s) {
-        Ui.pw.println(s);
-        Ui.pw.flush();
+        Ui.PW.println(s);
+        Ui.PW.flush();
     }
 
     /**
@@ -36,8 +39,8 @@ public class Ui {
      * @param s String.
      */
     public static void print(String s) {
-        Ui.pw.print(s);
-        Ui.pw.flush();
+        Ui.PW.print(s);
+        Ui.PW.flush();
     }
 
     /**
@@ -46,20 +49,20 @@ public class Ui {
      * @param e Exception.
      */
     public static void printException(Exception e) {
-        Ui.pw.println(e.getMessage());
+        Ui.PW.println(e.getMessage());
         Ui.printDivider();
-        Ui.pw.flush();
+        Ui.PW.flush();
     }
 
     /**
      * Reads a single line of input using BufferedReader.
      * Additionally prints a divider using Ui.printDivider().
-     * 
+     *
      * @return userInput String.
      * @throws IOException if readLine() fails.
      */
     public String readInput() throws IOException {
-        String input = Ui.br.readLine();
+        String input = Ui.BR.readLine();
         Ui.printDivider();
         return input;
     }
@@ -68,8 +71,8 @@ public class Ui {
      * Prints task added into TaskList.
      * Additionally prints a divider using Ui.printDivider().
      * Length of the TaskList is needed to update user of no. of tasks in TaskList.
-     * 
-     * @param t Task object.
+     *
+     * @param t   Task object.
      * @param len int value.
      */
     public static void printAddedTask(Task t, int len) {
@@ -81,7 +84,7 @@ public class Ui {
     /**
      * Prints task marked done in TaskList.
      * Additionally prints a divider using Ui.printDivider().
-     * 
+     *
      * @param t Task object.
      */
     public static void markDone(Task t) {
@@ -92,7 +95,7 @@ public class Ui {
     /**
      * Prints task marked undone in TaskList.
      * Additionally prints a divider using Ui.printDivider().
-     * 
+     *
      * @param t Task object.
      */
     public static void markUndone(Task t) {
@@ -104,8 +107,8 @@ public class Ui {
      * Prints to be deleted task in TaskList.
      * Additionally prints a divider using Ui.printDivider().
      * Length of the TaskList is needed to update user of no. of tasks in TaskList.
-     * 
-     * @param t Task object.
+     *
+     * @param t   Task object.
      * @param len int value.
      */
     public static void printDeletedTask(Task t, int len) {
@@ -114,18 +117,24 @@ public class Ui {
         Ui.printDivider();
     }
 
+    /**
+     * Prints tasks found by FindCommand.
+     * Additionally prints a divider using Ui.printDivider().
+     *
+     * @param tasks List of Tasks.
+     */
     public static void printTasksFound(List<Task> tasks) {
         StringBuilder sb = new StringBuilder();
 
         int i = 1;
-        for (Task t: tasks) {
+        for (Task t : tasks) {
             sb.append(i++ + ". " + t.toString());
             sb.append("\n");
         }
         Ui.print("Here are the matching tasks in your list:\n" + sb.toString());
         Ui.printDivider();
     }
-    
+
     /**
      * Prints error message if data file could not be loaded.
      */
