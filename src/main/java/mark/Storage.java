@@ -5,22 +5,32 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
+/**
+ * Handles reading and writing of storage file from disk.
+ */
 public class Storage {
-    /** Data file object **/
-    private File file;
-    /** Extracted TaskList **/
+    /**
+     * Input format of date and time
+     **/
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
+    /**
+     * Data file object
+     **/
+    private final File file;
+    /**
+     * Extracted TaskList
+     **/
     private List<Task> tasks;
-    /** Input format of date and time **/
-    private final static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Returns Storage object.
      * Pass in path to data file if exists.
-     * 
+     *
      * @param filePath String.
      */
     public Storage(String filePath) {
@@ -29,8 +39,8 @@ public class Storage {
 
     /**
      * Saves TaskList into data file.
-     * 
-     * @param tasks List<Task>.
+     *
+     * @param tasks List of Tasks.
      */
     public void save(List<Task> tasks) {
         this.tasks = tasks;
@@ -52,8 +62,8 @@ public class Storage {
      * Restores TaskList from previous session.
      * Returns list of tasks previously saved into data file.
      * Creates parent directory and file if data file does not exist.
-     * 
-     * @return List<Task>.
+     *
+     * @return List of Tasks.
      * @throws IOException if file cannot be created.
      */
     public List<Task> getFileContents() throws IOException {
@@ -65,7 +75,7 @@ public class Storage {
         if (!this.file.exists()) {
             this.file.createNewFile();
         }
-        
+
         Scanner sc = new Scanner(this.file);
         while (sc.hasNext()) {
             String[] entry = sc.nextLine().split(" \\| ");
@@ -75,16 +85,19 @@ public class Storage {
                 this.tasks.add(new Todo(entry[2], isDone));
                 break;
             case "D":
-                this.tasks.add(new Deadline(entry[2], isDone, LocalDateTime.parse(entry[3], Storage.dtf)));
+                this.tasks.add(new Deadline(entry[2], isDone, LocalDateTime.parse(entry[3], Storage.FORMAT)));
                 break;
             case "E":
                 String[] fromTo = entry[3].split(" \\|\\| ");
                 this.tasks.add(new Event(entry[2], isDone,
-                        LocalDateTime.parse(fromTo[0], Storage.dtf), LocalDateTime.parse(fromTo[1], Storage.dtf)));
+                        LocalDateTime.parse(fromTo[0], Storage.FORMAT),
+                        LocalDateTime.parse(fromTo[1], Storage.FORMAT)));
                 break;
+            default:
+                throw new IOException("Unknown entry: " + entry[0]);
             }
         }
-        
+
         return new ArrayList<>(this.tasks);
     }
 }

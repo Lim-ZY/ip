@@ -4,23 +4,28 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parses user input into Command objects.
+ */
 public class Parser {
-    /** Input format of date and time **/
-    private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    /**
+     * Input format of date and time
+     **/
+    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     /**
      * Returns executable Command subclasses.
-     * 
-     * @param input User Input
-     * @return Command subclass
-     * @throws InvalidFormatException
+     *
+     * @param input User Input.
+     * @return Command subclass.
+     * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parse(String input) throws InvalidFormatException {
         String[] segments = input.trim().split(" ", 2);
         String action = segments[0];
-        
+
         switch (action) {
-        case "list": 
+        case "list":
             return new ListCommand();
         case "bye":
             return new ByeCommand();
@@ -45,10 +50,10 @@ public class Parser {
 
     /**
      * Returns executable DeadlineCommand upon further parsing of input segments.
-     * 
-     * @param segments String[] of user input
-     * @return DeadlineCommand
-     * @throws InvalidFormatException
+     *
+     * @param segments String[] of user input.
+     * @return DeadlineCommand.
+     * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parseDeadline(String[] segments) throws InvalidFormatException {
         if (!segments[1].contains("/by")) {
@@ -58,7 +63,7 @@ public class Parser {
         String taskName = segments[1].substring(0, segments[1].indexOf("/by")).trim();
         LocalDateTime date;
         try {
-            date = LocalDateTime.parse(deadline, dtf);
+            date = LocalDateTime.parse(deadline, FORMAT);
         } catch (DateTimeParseException e) {
             throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
         }
@@ -68,20 +73,21 @@ public class Parser {
     /**
      * Returns executable EventCommand upon further parsing of input segments.
      *
-     * @param segments String[] of user input
-     * @return EventCommand
-     * @throws InvalidFormatException
+     * @param segments String[] of user input.
+     * @return EventCommand.
+     * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parseEvent(String[] segments) throws InvalidFormatException {
         if (!segments[1].contains("/from") || !segments[1].contains("/to")) {
             throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
                     + "/to <YYYY-MM-DD> <HHMM>");
         }
-        LocalDateTime fromDate, toDate;
+        LocalDateTime fromDate;
+        LocalDateTime toDate;
         try {
             fromDate = LocalDateTime.parse(segments[1].substring(segments[1].indexOf("/from") + 6,
-                    segments[1].indexOf("/to")).trim(), dtf);
-            toDate = LocalDateTime.parse(segments[1].substring(segments[1].indexOf("/to") + 4), dtf);
+                    segments[1].indexOf("/to")).trim(), FORMAT);
+            toDate = LocalDateTime.parse(segments[1].substring(segments[1].indexOf("/to") + 4), FORMAT);
         } catch (DateTimeParseException e) {
             throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
                     + "/to <YYYY-MM-DD> <HHMM>");

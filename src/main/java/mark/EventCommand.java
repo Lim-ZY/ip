@@ -2,17 +2,27 @@ package mark;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a command which creates an Event task in the task list.
+ */
 public class EventCommand extends Command {
     private final String taskName;
     private final LocalDateTime fromDate;
     private final LocalDateTime toDate;
-    
+
+    /**
+     * Returns an EventCommand with the specified taskName and date.
+     *
+     * @param taskName String.
+     * @param fromDate LocalDateTime.
+     * @param toDate   LocalDateTime.
+     */
     public EventCommand(String taskName, LocalDateTime fromDate, LocalDateTime toDate) {
         this.taskName = taskName;
         this.fromDate = fromDate;
         this.toDate = toDate;
     }
-    
+
     @Override
     void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new Event(this.taskName, this.fromDate, this.toDate));

@@ -3,7 +3,7 @@ package mark;
 import java.io.IOException;
 
 /**
- * Main entry point
+ * The main class of the Mark application.
  */
 public class Mark {
     private boolean running;
@@ -11,9 +11,13 @@ public class Mark {
     private Ui ui;
     private Storage storage;
 
+    /**
+     * Returns a Mark object with initialised Ui and Storage objects.
+     */
     public Mark() {
         this.running = true;
         this.ui = new Ui();
+        this.storage = new Storage("./data/data.txt");
     }
 
     public static void main(String[] args) {
@@ -22,16 +26,15 @@ public class Mark {
     }
 
     private void run() {
-        this.storage = new Storage("./data/data.txt");
         try {
             this.tasks = new TaskList(this.storage.getFileContents());
         } catch (IOException e) {
             ui.showLoadingError();
             this.tasks = new TaskList();
         }
-        
+
         ui.greet();
-        
+
         while (this.running) {
             try {
                 Command c = Parser.parse(ui.readInput());

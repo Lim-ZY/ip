@@ -6,7 +6,7 @@ package mark;
 public class Todo extends Task {
     /**
      * Returns Todo object for the Todo task.
-     * 
+     *
      * @param name Name of task.
      */
     public Todo(String name) {
@@ -16,8 +16,8 @@ public class Todo extends Task {
     /**
      * Returns Todo object for the Todo task.
      * Overloaded constructor for session restore from data file.
-     * 
-     * @param name Name of task.
+     *
+     * @param name   Name of task.
      * @param isDone Status of task.
      */
     public Todo(String name, boolean isDone) {
