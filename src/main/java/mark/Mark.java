@@ -21,6 +21,13 @@ public class Mark {
         this.running = true;
         this.ui = new Ui();
         this.storage = new Storage("./data/data.txt");
+
+        try {
+            this.tasks = new TaskList(this.storage.getFileContents());
+        } catch (IOException e) {
+            ui.showLoadingError();
+            this.tasks = new TaskList();
+        }
     }
 
     public static void main(String[] args) {
@@ -29,14 +36,7 @@ public class Mark {
     }
 
     private void run() {
-        try {
-            this.tasks = new TaskList(this.storage.getFileContents());
-        } catch (IOException e) {
-            ui.showLoadingError();
-            this.tasks = new TaskList();
-        }
-
-        ui.greet();
+        Ui.greet();
 
         while (this.running) {
             try {
@@ -60,6 +60,6 @@ public class Mark {
     }
 
     public String getGreetingMessage() {
-        return this.ui.getGreetingMessage();
+        return Ui.getGreetingMessage();
     }
 }

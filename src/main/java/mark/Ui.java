@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import mark.task.Task;
+import mark.task.TaskList;
 
 /**
  * Handles user interactions and displays intended output.
@@ -69,6 +70,10 @@ public class Ui {
         return input;
     }
 
+    public static String getAllTasksMessage(TaskList tasks) {
+        return tasks.toString();
+    }
+
     /**
      * Prints task added into TaskList.
      * Additionally prints a divider using Ui.printDivider().
@@ -78,9 +83,18 @@ public class Ui {
      * @param len int value.
      */
     public static void printAddedTask(Task t, int len) {
-        Ui.println("Got it. I've added this task:\n\t" + t.toString());
-        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.println(getAddedTaskMessage(t, len));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns add task message.
+     *
+     * @param t
+     * @param len
+     */
+    public static String getAddedTaskMessage(Task t, int len) {
+        return "Got it. I've added this task:\n\t" + t.toString() + "\nNow you have " + len + " tasks in the list.";
     }
 
     /**
@@ -90,8 +104,17 @@ public class Ui {
      * @param t Task object.
      */
     public static void markDone(Task t) {
-        Ui.println("Nice! I've marked this task as done:\n\t" + t.toString());
+        Ui.println(getMarkDoneMessage(t));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns task marked done message.
+     *
+     * @param t Task object.
+     */
+    public static String getMarkDoneMessage(Task t) {
+        return "Nice! I've marked this task as done:\n\t" + t.toString();
     }
 
     /**
@@ -101,8 +124,17 @@ public class Ui {
      * @param t Task object.
      */
     public static void markUndone(Task t) {
-        Ui.println("OK, I've marked this task as not done yet:\n\t" + t.toString());
+        Ui.println(getMarkUndoneMessage(t));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns task marked undone string.
+     *
+     * @param t Task object.
+     */
+    public static String getMarkUndoneMessage(Task t) {
+        return "OK, I've marked this task as not done yet:\n\t" + t.toString();
     }
 
     /**
@@ -114,9 +146,18 @@ public class Ui {
      * @param len int value.
      */
     public static void printDeletedTask(Task t, int len) {
-        Ui.println("Noted. I've removed this task:\n\t" + t.toString());
-        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.println(getDeletedTaskMessage(t, len));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns deleted task string.
+     *
+     * @param t   Task object.
+     * @param len int value.
+     */
+    public static String getDeletedTaskMessage(Task t, int len) {
+        return "Noted. I've removed this task:\n\t" + t.toString() + "\nNow you have " + len + " tasks in the list.";
     }
 
     /**
@@ -126,6 +167,16 @@ public class Ui {
      * @param tasks List of Tasks.
      */
     public static void printTasksFound(List<Task> tasks) {
+        Ui.print(getTasksFoundMessage(tasks));
+        Ui.printDivider();
+    }
+
+    /**
+     * Returns tasks found as string.
+     *
+     * @param tasks List of Tasks.
+     */
+    public static String getTasksFoundMessage(List<Task> tasks) {
         StringBuilder sb = new StringBuilder();
 
         int i = 1;
@@ -133,8 +184,7 @@ public class Ui {
             sb.append(i++ + ". " + t.toString());
             sb.append("\n");
         }
-        Ui.print("Here are the matching tasks in your list:\n" + sb.toString());
-        Ui.printDivider();
+        return "Here are the matching tasks in your list:\n" + sb.toString();
     }
 
     /**
@@ -171,7 +221,14 @@ public class Ui {
      * Prints termination message.
      */
     public void bye() {
-        Ui.println("Bye. Hope to see you again soon!");
+        Ui.println(getByeMessage());
         Ui.printDivider();
+    }
+
+    /**
+     * Returns farewell message as string.
+     */
+    public static String getByeMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 }
