@@ -24,6 +24,7 @@ public class MarkCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             tasks.markDone(this.id);
+            this.response = Ui.getMarkDoneMessage(tasks.getTask(this.id));
         } catch (MarkException e) {
             Ui.printException(e);
         }

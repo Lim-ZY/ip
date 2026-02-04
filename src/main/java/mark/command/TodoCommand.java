@@ -22,7 +22,9 @@ public class TodoCommand extends Command {
             Ui.println("Oh no... the description of a todo cannot be empty. Please try again.");
             Ui.printDivider();
         } else {
-            tasks.addTask(new Todo(input[1]));
+            Todo task = new Todo(input[1]);
+            tasks.addTask(task);
+            this.response = Ui.getAddedTaskMessage(task, tasks.length());
         }
     }
 

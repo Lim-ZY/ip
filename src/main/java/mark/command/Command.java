@@ -10,4 +10,10 @@ import mark.Ui;
 public abstract class Command {
     public abstract void execute(TaskList tasks, Ui ui, Storage storage);
     public abstract boolean isExit();
+    public String response = "";
+
+    @Override
+    public String toString() {
+        return response;
+    }
 }

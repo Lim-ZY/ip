@@ -38,6 +38,13 @@ public class TaskList {
     }
 
     /**
+     * Returns a task at the given task number.
+     */
+    public Task getTask(int id) {
+        return this.tasks.get(id);
+    }
+
+    /**
      * Adds task to TaskList.
      *
      * @param t Task to add.
@@ -117,11 +124,25 @@ public class TaskList {
             Ui.println("No tasks in the list.");
             return;
         }
+        Ui.print(this.toString());
+        Ui.printDivider();
+    }
+
+    /**
+     * Returns tasks in string representation.
+     */
+    @Override
+    public String toString() {
+        if (this.tasks.isEmpty()) {
+            return "No tasks in the list.";
+        }
+
+        StringBuilder sb = new StringBuilder();
         int i = 1;
         for (Task t : this.tasks) {
-            Ui.println(i++ + ". " + t.toString());
+            sb.append(i++ + ". " + t.toString() + "\n");
         }
-        Ui.printDivider();
+        return sb.toString();
     }
 
     /**

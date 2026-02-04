@@ -30,7 +30,9 @@ public class EventCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        tasks.addTask(new Event(this.taskName, this.fromDate, this.toDate));
+        Event task = new Event(this.taskName, this.fromDate, this.toDate);
+        tasks.addTask(task);
+        this.response = Ui.getAddedTaskMessage(task, tasks.length());
     }
 
     @Override

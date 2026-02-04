@@ -24,6 +24,7 @@ public class UnmarkCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             tasks.markUndone(this.id);
+            this.response = Ui.getMarkUndoneMessage(tasks.getTask(this.id));
         } catch (MarkException e) {
             Ui.printException(e);
         }

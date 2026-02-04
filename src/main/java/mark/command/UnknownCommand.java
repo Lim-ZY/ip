@@ -10,8 +10,10 @@ import mark.Ui;
 public class UnknownCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) {
-        Ui.println("I'm sorry, I don't know what that means :( Please try again.");
+        String message = "I'm sorry, I don't know what that means :( Please try again.";
+        Ui.println(message);
         Ui.printDivider();
+        this.response = message;
     }
 
     @Override

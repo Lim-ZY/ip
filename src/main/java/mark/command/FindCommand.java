@@ -24,6 +24,7 @@ public class FindCommand extends Command {
         try {
             List<Task> result = tasks.find(keyword);
             Ui.printTasksFound(result);
+            this.response = Ui.getTasksFoundMessage(result);
         } catch (MarkException e) {
             Ui.printException(e);
         }
