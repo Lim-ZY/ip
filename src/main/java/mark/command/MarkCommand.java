@@ -21,7 +21,7 @@ public class MarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         try {
             tasks.markDone(this.id);
             this.response = Ui.getMarkDoneMessage(tasks.getTask(this.id));

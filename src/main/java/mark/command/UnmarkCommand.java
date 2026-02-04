@@ -21,7 +21,7 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         try {
             tasks.markUndone(this.id);
             this.response = Ui.getMarkUndoneMessage(tasks.getTask(this.id));

@@ -13,15 +13,15 @@ import mark.task.TaskList;
  * Handles user interactions and displays intended output.
  */
 public class Ui {
-    private static final PrintWriter PW = new PrintWriter(System.out);
-    private static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
+    private static final PrintWriter pw = new PrintWriter(System.out);
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Prints divider line.
      */
     public static void printDivider() {
-        Ui.PW.println("_____________________________________");
-        Ui.PW.flush();
+        Ui.pw.println("_____________________________________");
+        Ui.pw.flush();
     }
 
     /**
@@ -31,8 +31,8 @@ public class Ui {
      * @param s String.
      */
     public static void println(String s) {
-        Ui.PW.println(s);
-        Ui.PW.flush();
+        Ui.pw.println(s);
+        Ui.pw.flush();
     }
 
     /**
@@ -42,8 +42,8 @@ public class Ui {
      * @param s String.
      */
     public static void print(String s) {
-        Ui.PW.print(s);
-        Ui.PW.flush();
+        Ui.pw.print(s);
+        Ui.pw.flush();
     }
 
     /**
@@ -52,9 +52,9 @@ public class Ui {
      * @param e Exception.
      */
     public static void printException(Exception e) {
-        Ui.PW.println(e.getMessage());
+        Ui.pw.println(e.getMessage());
         Ui.printDivider();
-        Ui.PW.flush();
+        Ui.pw.flush();
     }
 
     /**
@@ -64,8 +64,8 @@ public class Ui {
      * @return userInput String.
      * @throws IOException if readLine() fails.
      */
-    public String readInput() throws IOException {
-        String input = Ui.BR.readLine();
+    public static String readInput() throws IOException {
+        String input = Ui.br.readLine();
         Ui.printDivider();
         return input;
     }
@@ -190,7 +190,7 @@ public class Ui {
     /**
      * Prints error message if data file could not be loaded.
      */
-    public void showLoadingError() {
+    public static void showLoadingError() {
         Ui.println("Could not read/create file. Continuing with empty tasklist.");
     }
 
@@ -220,7 +220,7 @@ public class Ui {
     /**
      * Prints termination message.
      */
-    public void bye() {
+    public static void bye() {
         Ui.println(getByeMessage());
         Ui.printDivider();
     }

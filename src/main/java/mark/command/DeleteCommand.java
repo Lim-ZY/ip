@@ -16,7 +16,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         try {
             this.response = Ui.getDeletedTaskMessage(tasks.getTask(this.id), tasks.length() - 1);
             tasks.delete(this.id);

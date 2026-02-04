@@ -9,23 +9,21 @@ import mark.task.TaskList;
  * The main class of the Mark application.
  */
 public class Mark {
-    private boolean running;
+    private boolean isRunning;
     private TaskList tasks;
-    private Ui ui;
     private Storage storage;
 
     /**
-     * Returns a Mark object with initialised Ui and Storage objects.
+     * Returns a Mark object with initialised Storage object.
      */
     public Mark() {
-        this.running = true;
-        this.ui = new Ui();
+        this.isRunning = true;
         this.storage = new Storage("./data/data.txt");
 
         try {
             this.tasks = new TaskList(this.storage.getFileContents());
         } catch (IOException e) {
-            ui.showLoadingError();
+            Ui.showLoadingError();
             this.tasks = new TaskList();
         }
     }
@@ -38,11 +36,11 @@ public class Mark {
     private void run() {
         Ui.greet();
 
-        while (this.running) {
+        while (this.isRunning) {
             try {
-                Command c = Parser.parse(ui.readInput());
-                c.execute(this.tasks, this.ui, this.storage);
-                this.running = !c.isExit();
+                Command c = Parser.parse(Ui.readInput());
+                c.execute(this.tasks, this.storage);
+                this.isRunning = !c.isExit();
             } catch (InvalidFormatException | IOException e) {
                 Ui.printException(e);
             }
@@ -52,7 +50,7 @@ public class Mark {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
-            c.execute(this.tasks, this.ui, this.storage);
+            c.execute(this.tasks, this.storage);
             return c.toString();
         } catch (InvalidFormatException e) {
             return "Error: " + e.getMessage();

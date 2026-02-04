@@ -16,7 +16,7 @@ public class TodoCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         String todo = input[1];
         if (todo.isEmpty()) {
             Ui.println("Oh no... the description of a todo cannot be empty. Please try again.");
