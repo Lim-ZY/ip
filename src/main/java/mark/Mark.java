@@ -48,4 +48,18 @@ public class Mark {
             }
         }
     }
+
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            c.execute(this.tasks, this.ui, this.storage);
+            return c.toString();
+        } catch (InvalidFormatException e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    public String getGreetingMessage() {
+        return this.ui.getGreetingMessage();
+    }
 }

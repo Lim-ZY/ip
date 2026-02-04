@@ -147,17 +147,24 @@ public class Ui {
     /**
      * Prints greeting message.
      */
-    public void greet() {
+    public static void greet() {
+        Ui.printDivider();
+        Ui.println(getGreetingMessage());
+        Ui.printDivider();
+        Ui.print("\n");
+    }
+
+    /**
+     * Returns greeting message as string.
+     */
+    public static String getGreetingMessage() {
         String logo = "  __  __            _    \n"
                 + " |  \\/  |          | |   \n"
                 + " | \\  / | __ _ _ __| | __\n"
                 + " | |\\/| |/ _` | '__| |/ /\n"
                 + " | |  | | (_| | |  |   < \n"
                 + " |_|  |_|\\__,_|_|  |_|\\_\\\n";
-        Ui.printDivider();
-        Ui.println("Hello! I'm \n" + logo + "What can I do for you?");
-        Ui.printDivider();
-        Ui.print("\n");
+        return "Hello! I'm \n" + logo + "\nWhat can I do for you?";
     }
 
     /**
