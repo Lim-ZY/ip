@@ -1,9 +1,11 @@
-package mark;
+package mark.task;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import mark.task.Task;
+import mark.MarkException;
+import mark.Storage;
+import mark.Ui;
 
 /**
  * Represents a collection of tasks.
