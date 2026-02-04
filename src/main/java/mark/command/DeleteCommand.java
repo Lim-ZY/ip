@@ -1,4 +1,9 @@
-package mark;
+package mark.command;
+
+import mark.MarkException;
+import mark.Storage;
+import mark.task.TaskList;
+import mark.Ui;
 
 /**
  * Represents a command that deletes the task specified when executed.
@@ -11,7 +16,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         try {
             tasks.delete(this.id);
         } catch (MarkException e) {
@@ -20,7 +25,7 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }

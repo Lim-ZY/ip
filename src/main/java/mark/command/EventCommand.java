@@ -1,6 +1,11 @@
-package mark;
+package mark.command;
 
 import java.time.LocalDateTime;
+
+import mark.task.Event;
+import mark.Storage;
+import mark.task.TaskList;
+import mark.Ui;
 
 /**
  * Represents a command which creates an Event task in the task list.
@@ -24,12 +29,12 @@ public class EventCommand extends Command {
     }
 
     @Override
-    void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new Event(this.taskName, this.fromDate, this.toDate));
     }
 
     @Override
-    boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }

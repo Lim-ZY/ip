@@ -1,16 +1,20 @@
-package mark;
+package mark.command;
+
+import mark.Storage;
+import mark.task.TaskList;
+import mark.Ui;
 
 /**
  * Represents a command which lists all tasks in the task list.
  */
 public class ListCommand extends Command {
     @Override
-    void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.printTasks();
     }
 
     @Override
-    boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }

@@ -1,4 +1,4 @@
-package mark;
+package mark.task;
 
 /**
  * Represents a general task with a name and done status.

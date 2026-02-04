@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import mark.task.Deadline;
+import mark.task.Event;
+import mark.task.Task;
+import mark.task.Todo;
+
 /**
  * Handles reading and writing of storage file from disk.
  */

@@ -1,6 +1,11 @@
-package mark;
+package mark.command;
 
 import java.time.LocalDateTime;
+
+import mark.task.Deadline;
+import mark.Storage;
+import mark.task.TaskList;
+import mark.Ui;
 
 /**
  * Represents a command which creates a Deadline task in the task list.
@@ -21,12 +26,12 @@ public class DeadlineCommand extends Command {
     }
 
     @Override
-    void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Ui ui, Storage storage) {
         tasks.addTask(new Deadline(this.taskName, this.date));
     }
 
     @Override
-    boolean isExit() {
+    public boolean isExit() {
         return false;
     }
 }
