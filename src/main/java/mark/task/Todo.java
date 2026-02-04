@@ -1,4 +1,4 @@
-package mark;
+package mark.task;
 
 /**
  * Represents a Todo task.

@@ -2,6 +2,8 @@ package mark;
 
 import java.io.IOException;
 
+import mark.command.Command;
+
 /**
  * The main class of the Mark application.
  */

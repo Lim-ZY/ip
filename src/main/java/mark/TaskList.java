@@ -3,6 +3,8 @@ package mark;
 import java.util.ArrayList;
 import java.util.List;
 
+import mark.task.Task;
+
 /**
  * Represents a collection of tasks.
  * Provides methods to add, delete, mark, unmark, and find tasks.
