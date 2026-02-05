@@ -1,17 +1,18 @@
 package mark.command;
 
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command that signals to end the session.
  */
 public class ByeCommand extends Command {
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         tasks.saveTasks(storage);
-        ui.bye();
+        Ui.bye();
+        this.response = Ui.getByeMessage();
     }
 
     @Override

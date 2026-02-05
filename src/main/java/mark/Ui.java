@@ -7,20 +7,21 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import mark.task.Task;
+import mark.task.TaskList;
 
 /**
  * Handles user interactions and displays intended output.
  */
 public class Ui {
-    private static final PrintWriter PW = new PrintWriter(System.out);
-    private static final BufferedReader BR = new BufferedReader(new InputStreamReader(System.in));
+    private static final PrintWriter pw = new PrintWriter(System.out);
+    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     /**
      * Prints divider line.
      */
     public static void printDivider() {
-        Ui.PW.println("_____________________________________");
-        Ui.PW.flush();
+        Ui.pw.println("_____________________________________");
+        Ui.pw.flush();
     }
 
     /**
@@ -30,8 +31,8 @@ public class Ui {
      * @param s String.
      */
     public static void println(String s) {
-        Ui.PW.println(s);
-        Ui.PW.flush();
+        Ui.pw.println(s);
+        Ui.pw.flush();
     }
 
     /**
@@ -41,8 +42,8 @@ public class Ui {
      * @param s String.
      */
     public static void print(String s) {
-        Ui.PW.print(s);
-        Ui.PW.flush();
+        Ui.pw.print(s);
+        Ui.pw.flush();
     }
 
     /**
@@ -51,9 +52,9 @@ public class Ui {
      * @param e Exception.
      */
     public static void printException(Exception e) {
-        Ui.PW.println(e.getMessage());
+        Ui.pw.println(e.getMessage());
         Ui.printDivider();
-        Ui.PW.flush();
+        Ui.pw.flush();
     }
 
     /**
@@ -63,10 +64,14 @@ public class Ui {
      * @return userInput String.
      * @throws IOException if readLine() fails.
      */
-    public String readInput() throws IOException {
-        String input = Ui.BR.readLine();
+    public static String readInput() throws IOException {
+        String input = Ui.br.readLine();
         Ui.printDivider();
         return input;
+    }
+
+    public static String getAllTasksMessage(TaskList tasks) {
+        return tasks.toString();
     }
 
     /**
@@ -78,9 +83,18 @@ public class Ui {
      * @param len int value.
      */
     public static void printAddedTask(Task t, int len) {
-        Ui.println("Got it. I've added this task:\n\t" + t.toString());
-        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.println(getAddedTaskMessage(t, len));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns add task message.
+     *
+     * @param t
+     * @param len
+     */
+    public static String getAddedTaskMessage(Task t, int len) {
+        return "Got it. I've added this task:\n\t" + t.toString() + "\nNow you have " + len + " tasks in the list.";
     }
 
     /**
@@ -90,8 +104,17 @@ public class Ui {
      * @param t Task object.
      */
     public static void markDone(Task t) {
-        Ui.println("Nice! I've marked this task as done:\n\t" + t.toString());
+        Ui.println(getMarkDoneMessage(t));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns task marked done message.
+     *
+     * @param t Task object.
+     */
+    public static String getMarkDoneMessage(Task t) {
+        return "Nice! I've marked this task as done:\n\t" + t.toString();
     }
 
     /**
@@ -101,8 +124,17 @@ public class Ui {
      * @param t Task object.
      */
     public static void markUndone(Task t) {
-        Ui.println("OK, I've marked this task as not done yet:\n\t" + t.toString());
+        Ui.println(getMarkUndoneMessage(t));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns task marked undone string.
+     *
+     * @param t Task object.
+     */
+    public static String getMarkUndoneMessage(Task t) {
+        return "OK, I've marked this task as not done yet:\n\t" + t.toString();
     }
 
     /**
@@ -114,9 +146,18 @@ public class Ui {
      * @param len int value.
      */
     public static void printDeletedTask(Task t, int len) {
-        Ui.println("Noted. I've removed this task:\n\t" + t.toString());
-        Ui.println("Now you have " + len + " tasks in the list.");
+        Ui.println(getDeletedTaskMessage(t, len));
         Ui.printDivider();
+    }
+
+    /**
+     * Returns deleted task string.
+     *
+     * @param t   Task object.
+     * @param len int value.
+     */
+    public static String getDeletedTaskMessage(Task t, int len) {
+        return "Noted. I've removed this task:\n\t" + t.toString() + "\nNow you have " + len + " tasks in the list.";
     }
 
     /**
@@ -126,6 +167,16 @@ public class Ui {
      * @param tasks List of Tasks.
      */
     public static void printTasksFound(List<Task> tasks) {
+        Ui.print(getTasksFoundMessage(tasks));
+        Ui.printDivider();
+    }
+
+    /**
+     * Returns tasks found as string.
+     *
+     * @param tasks List of Tasks.
+     */
+    public static String getTasksFoundMessage(List<Task> tasks) {
         StringBuilder sb = new StringBuilder();
 
         int i = 1;
@@ -133,38 +184,51 @@ public class Ui {
             sb.append(i++ + ". " + t.toString());
             sb.append("\n");
         }
-        Ui.print("Here are the matching tasks in your list:\n" + sb.toString());
-        Ui.printDivider();
+        return "Here are the matching tasks in your list:\n" + sb.toString();
     }
 
     /**
      * Prints error message if data file could not be loaded.
      */
-    public void showLoadingError() {
+    public static void showLoadingError() {
         Ui.println("Could not read/create file. Continuing with empty tasklist.");
     }
 
     /**
      * Prints greeting message.
      */
-    public void greet() {
+    public static void greet() {
+        Ui.printDivider();
+        Ui.println(getGreetingMessage());
+        Ui.printDivider();
+        Ui.print("\n");
+    }
+
+    /**
+     * Returns greeting message as string.
+     */
+    public static String getGreetingMessage() {
         String logo = "  __  __            _    \n"
                 + " |  \\/  |          | |   \n"
                 + " | \\  / | __ _ _ __| | __\n"
                 + " | |\\/| |/ _` | '__| |/ /\n"
                 + " | |  | | (_| | |  |   < \n"
                 + " |_|  |_|\\__,_|_|  |_|\\_\\\n";
-        Ui.printDivider();
-        Ui.println("Hello! I'm \n" + logo + "What can I do for you?");
-        Ui.printDivider();
-        Ui.print("\n");
+        return "Hello! I'm \n" + logo + "\nWhat can I do for you?";
     }
 
     /**
      * Prints termination message.
      */
-    public void bye() {
-        Ui.println("Bye. Hope to see you again soon!");
+    public static void bye() {
+        Ui.println(getByeMessage());
         Ui.printDivider();
+    }
+
+    /**
+     * Returns farewell message as string.
+     */
+    public static String getByeMessage() {
+        return "Bye. Hope to see you again soon!";
     }
 }

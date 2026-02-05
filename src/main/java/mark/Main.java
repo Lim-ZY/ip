@@ -1,0 +1,38 @@
+package mark;
+
+import java.io.IOException;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
+/**
+ * Main entry point of JavaFX after launch.
+ */
+public class Main extends Application {
+    private Mark mark = new Mark();
+
+    @Override
+    public void start(Stage stage) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            AnchorPane ap = fxmlLoader.load();
+            Scene scene = new Scene(ap);
+            stage.setScene(scene);
+            stage.setMinHeight(220);
+            stage.setMinWidth(417);
+            stage.setMaxWidth(417);
+            MainWindow controller = fxmlLoader.<MainWindow>getController();
+            controller.setMark(mark); // inject the Mark instance
+            // handle click window close event
+            stage.setOnCloseRequest(e -> {
+                controller.handleCloseButton();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

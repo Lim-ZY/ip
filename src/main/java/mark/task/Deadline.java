@@ -8,9 +8,9 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends Task {
     /**
-     * Input format of date and time
+     * Input format of date and time.
      **/
-    private static final DateTimeFormatter FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
     private final LocalDateTime deadline;
 
@@ -40,7 +40,7 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + this.deadline.format(Deadline.FORMAT) + ")";
+        return "[D]" + super.toString() + " (by: " + this.deadline.format(Deadline.OUTPUT_DATETIME_FORMAT) + ")";
     }
 
     /**
@@ -48,6 +48,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toSaveString() {
-        return "D | " + super.toSaveString() + " | " + this.deadline.format(Deadline.FORMAT);
+        return "D | " + super.toSaveString() + " | " + this.deadline.format(Deadline.OUTPUT_DATETIME_FORMAT);
     }
 }

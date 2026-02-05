@@ -2,8 +2,8 @@ package mark.command;
 
 import mark.MarkException;
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command which marks a task in the task list as undone.
@@ -21,9 +21,10 @@ public class UnmarkCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) {
+    public void execute(TaskList tasks, Storage storage) {
         try {
             tasks.markUndone(this.id);
+            this.response = Ui.getMarkUndoneMessage(tasks.getTask(this.id));
         } catch (MarkException e) {
             Ui.printException(e);
         }
