@@ -1,5 +1,6 @@
 package mark;
 
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * Controller for the main GUI.
@@ -50,5 +53,12 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getMarkDialog(response, markImage)
         );
         userInput.clear();
+
+        if (mark.isExit(input)) {
+            Stage stage = (Stage) dialogContainer.getScene().getWindow();
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(e -> { stage.close(); });
+            pause.play();
+        }
     }
 }

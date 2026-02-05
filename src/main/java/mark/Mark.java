@@ -57,6 +57,15 @@ public class Mark {
         }
     }
 
+    public boolean isExit(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.isExit();
+        } catch (InvalidFormatException e) {
+            return false;
+        }
+    }
+
     public String getGreetingMessage() {
         return Ui.getGreetingMessage();
     }
