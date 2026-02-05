@@ -21,7 +21,10 @@ public class Main extends Application {
             stage.setMinHeight(220);
             stage.setMinWidth(417);
             stage.setMaxWidth(417);
-            fxmlLoader.<MainWindow>getController().setMark(mark);  // inject the Mark instance
+            MainWindow controller = fxmlLoader.<MainWindow>getController();
+            controller.setMark(mark);  // inject the Mark instance
+            // handle click window close event
+            stage.setOnCloseRequest(e -> {controller.handleCloseButton();});
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

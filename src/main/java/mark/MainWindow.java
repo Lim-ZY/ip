@@ -61,4 +61,11 @@ public class MainWindow extends AnchorPane {
             pause.play();
         }
     }
+
+    public void handleCloseButton() {
+        String response = mark.getResponse("bye");
+        dialogContainer.getChildren().add(
+                DialogBox.getMarkDialog(response, markImage)
+        );
+    }
 }
