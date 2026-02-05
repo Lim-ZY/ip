@@ -5,11 +5,13 @@
 .text-field {
     -fx-background-color: #2b2c2f;
     -fx-text-inner-color: #e6e6e6;
-    -fx-font: 20px "Arial";
+    -fx-font: 18px "Arial";
     -fx-background-radius: 8px;
     -fx-padding: 8px;
     -fx-border-color: #3a3b3d;
     -fx-border-radius: 8px;
+    -fx-border-insets: 0 6px 0 0;
+    -fx-background-insets: 0 6px 0 0;
 }
 
 .button {
