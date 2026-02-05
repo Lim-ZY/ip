@@ -1,5 +1,6 @@
 package mark.command;
 
+import mark.InvalidFormatException;
 import mark.Storage;
 import mark.task.TaskList;
 import mark.task.Todo;
@@ -11,7 +12,10 @@ import mark.Ui;
 public class TodoCommand extends Command {
     private final String[] input;
 
-    public TodoCommand(String[] input) {
+    public TodoCommand(String[] input) throws InvalidFormatException {
+        if (input.length != 2 || input[1].isBlank()) {
+            throw new InvalidFormatException("Usage: todo <task>");
+        }
         this.input = input;
     }
 
