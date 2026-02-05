@@ -1,25 +1,31 @@
 .root {
-    main-color: rgb(237, 255, 242);       /* Create a looked-up color called "main-color" within root. */
-    -fx-background-color: main-color;
+    -fx-background-color: #202123;
 }
 
 .text-field {
-    -fx-background-color: #d9ffe2;
+    -fx-background-color: #2b2c2f;
+    -fx-text-inner-color: #e6e6e6;
     -fx-font: 20px "Arial";
+    -fx-background-radius: 8px;
+    -fx-padding: 8px;
+    -fx-border-color: #3a3b3d;
+    -fx-border-radius: 8px;
 }
 
 .button {
-    -fx-background-color: mediumspringgreen;
+    -fx-background-color: #3a3b3d;
+    -fx-text-fill: #e6e6e6;
+    -fx-background-radius: 8px;
     -fx-font: italic bold 16px "Arial";
 }
 
 .button:hover {
-    -fx-background-color:cyan;
+    -fx-background-color: #505254;
     -fx-font-size: 18px;
 }
 
 .button:pressed {
-    -fx-background-color:orange;
+    -fx-background-color: #00c2a8;
     -fx-font-size: 20px;
 }
 
@@ -30,12 +36,12 @@
 
 .scroll-bar {
     -fx-font-size: 10px;  /* Change width of scroll bar. */
-    -fx-background-color: main-color;
+    -fx-background-color: transparent;
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: #ff9cb4;
-    -fx-background-radius: 1em;
+    -fx-background-color: #3a3b3d;
+    -fx-background-radius: 4px;
 }
 
 /* Hides the increment and decrement buttons. */
