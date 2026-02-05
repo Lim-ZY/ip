@@ -4,9 +4,9 @@ import java.util.List;
 
 import mark.MarkException;
 import mark.Storage;
+import mark.Ui;
 import mark.task.Task;
 import mark.task.TaskList;
-import mark.Ui;
 
 /**
  * Represents a command which finds tasks with matching names from the task list.

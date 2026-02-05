@@ -1,8 +1,8 @@
 package mark.command;
 
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command that signals to end the session.

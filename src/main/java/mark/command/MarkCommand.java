@@ -2,8 +2,8 @@ package mark.command;
 
 import mark.MarkException;
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command which marks a task in the task list as done.

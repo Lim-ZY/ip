@@ -28,11 +28,19 @@ public class Mark {
         }
     }
 
+    /**
+     * Starts the Mark instance for the CLI.
+     *
+     * @param args No args are needed.
+     */
     public static void main(String[] args) {
         Mark mark = new Mark();
         mark.run();
     }
 
+    /**
+     * Starts the main loop and execution of Mark.
+     */
     private void run() {
         Ui.greet();
 
@@ -47,6 +55,11 @@ public class Mark {
         }
     }
 
+    /**
+     * Returns the response of Mark as a string in response to user input.
+     *
+     * @param input String.
+     */
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
@@ -57,6 +70,12 @@ public class Mark {
         }
     }
 
+    /**
+     * Returns exit status of command in response to user input.
+     *
+     * @param input String.
+     * @return true if user command is "bye".
+     */
     public boolean isExit(String input) {
         try {
             Command c = Parser.parse(input);
@@ -66,6 +85,12 @@ public class Mark {
         }
     }
 
+    /**
+     * Returns the greeting message as a string.
+     * Used for the GUI.
+     *
+     * @return String representation of greeting message.
+     */
     public String getGreetingMessage() {
         return Ui.getGreetingMessage();
     }

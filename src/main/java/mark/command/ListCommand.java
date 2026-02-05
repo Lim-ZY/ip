@@ -1,8 +1,8 @@
 package mark.command;
 
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command which lists all tasks in the task list.

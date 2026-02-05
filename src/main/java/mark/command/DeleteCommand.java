@@ -2,8 +2,8 @@ package mark.command;
 
 import mark.MarkException;
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.TaskList;
 
 /**
  * Represents a command that deletes the task specified when executed.

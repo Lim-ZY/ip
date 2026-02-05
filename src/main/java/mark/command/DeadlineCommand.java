@@ -2,10 +2,10 @@ package mark.command;
 
 import java.time.LocalDateTime;
 
-import mark.task.Deadline;
 import mark.Storage;
-import mark.task.TaskList;
 import mark.Ui;
+import mark.task.Deadline;
+import mark.task.TaskList;
 
 /**
  * Represents a command which creates a Deadline task in the task list.

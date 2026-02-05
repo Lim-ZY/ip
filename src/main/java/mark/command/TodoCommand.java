@@ -2,9 +2,9 @@ package mark.command;
 
 import mark.InvalidFormatException;
 import mark.Storage;
+import mark.Ui;
 import mark.task.TaskList;
 import mark.task.Todo;
-import mark.Ui;
 
 /**
  * Represents a command which creates a Todo task in the task list.
@@ -12,6 +12,12 @@ import mark.Ui;
 public class TodoCommand extends Command {
     private final String[] input;
 
+    /**
+     * Returns a TodoCommand object.
+     *
+     * @param input User command.
+     * @throws InvalidFormatException if task field is blank.
+     */
     public TodoCommand(String[] input) throws InvalidFormatException {
         if (input.length != 2 || input[1].isBlank()) {
             throw new InvalidFormatException("Usage: todo <task>");

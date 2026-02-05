@@ -34,7 +34,9 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Mark instance */
+    /**
+     * Injects the Mark instance
+     */
     public void setMark(Mark m) {
         mark = m;
         dialogContainer.getChildren().addAll(DialogBox.getMarkDialog(mark.getGreetingMessage(), markImage));
@@ -57,11 +59,16 @@ public class MainWindow extends AnchorPane {
         if (mark.isExit(input)) {
             Stage stage = (Stage) dialogContainer.getScene().getWindow();
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> { stage.close(); });
+            pause.setOnFinished(e -> {
+                stage.close();
+            });
             pause.play();
         }
     }
 
+    /**
+     * Handles window's close button pressed event.
+     */
     public void handleCloseButton() {
         String response = mark.getResponse("bye");
         dialogContainer.getChildren().add(
