@@ -29,9 +29,4 @@ public class FindCommand extends Command {
             Ui.printException(e);
         }
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }

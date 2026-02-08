@@ -24,9 +24,4 @@ public class DeleteCommand extends Command {
             Ui.printException(e);
         }
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }

@@ -9,7 +9,10 @@ import mark.task.TaskList;
 public abstract class Command {
     protected String response = "";
     public abstract void execute(TaskList tasks, Storage storage);
-    public abstract boolean isExit();
+
+    public boolean isExit() {
+        return false;
+    }
 
     @Override
     public String toString() {

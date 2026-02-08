@@ -15,9 +15,4 @@ public class UnknownCommand extends Command {
         Ui.printDivider();
         this.response = message;
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }
