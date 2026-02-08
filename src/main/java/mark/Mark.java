@@ -26,6 +26,7 @@ public class Mark {
             Ui.showLoadingError();
             this.tasks = new TaskList();
         }
+        assertInvariants();
     }
 
     /**
@@ -42,12 +43,17 @@ public class Mark {
      * Starts the main loop and execution of Mark.
      */
     private void run() {
+        assertInvariants();
+        assert isRunning : "Mark should be in running state";
         Ui.greet();
 
         while (this.isRunning) {
             try {
                 Command c = Parser.parse(Ui.readInput());
+                assert c != null : "Parser.parse should return a Command";
+
                 c.execute(this.tasks, this.storage);
+                assertInvariants();
                 this.isRunning = !c.isExit();
             } catch (InvalidFormatException | IOException e) {
                 Ui.printException(e);
@@ -63,7 +69,10 @@ public class Mark {
     public String getResponse(String input) {
         try {
             Command c = Parser.parse(input);
+            assert c != null : "Parser.parse should return a Command";
+
             c.execute(this.tasks, this.storage);
+            assertInvariants();
             return c.toString();
         } catch (InvalidFormatException e) {
             return "Error: " + e.getMessage();
@@ -79,6 +88,8 @@ public class Mark {
     public boolean isExit(String input) {
         try {
             Command c = Parser.parse(input);
+            assert c != null : "Parser.parse should return a Command";
+
             return c.isExit();
         } catch (InvalidFormatException e) {
             return false;
@@ -93,5 +104,13 @@ public class Mark {
      */
     public String getGreetingMessage() {
         return Ui.getGreetingMessage();
+    }
+
+    /**
+     * Asserts tasks and storage should not be null.
+     */
+    private void assertInvariants() {
+        assert this.tasks != null : "TaskList should be initialised";
+        assert this.storage != null : "Storage should be initialised";
     }
 }
