@@ -37,9 +37,4 @@ public class TodoCommand extends Command {
             this.response = Ui.getAddedTaskMessage(task, tasks.length());
         }
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }

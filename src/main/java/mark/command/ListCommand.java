@@ -13,9 +13,4 @@ public class ListCommand extends Command {
         tasks.printTasks();
         this.response = Ui.getAllTasksMessage(tasks);
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }

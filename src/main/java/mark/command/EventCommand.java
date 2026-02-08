@@ -34,9 +34,4 @@ public class EventCommand extends Command {
         tasks.addTask(task);
         this.response = Ui.getAddedTaskMessage(task, tasks.length());
     }
-
-    @Override
-    public boolean isExit() {
-        return false;
-    }
 }
