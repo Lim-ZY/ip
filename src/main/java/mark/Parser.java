@@ -24,6 +24,13 @@ public class Parser {
      * Input format of date and time
      **/
     private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+    private static final String INVALID_MARK_ERROR = "Usage: mark <index>";
+    private static final String INVALID_UNMARK_ERROR = "Usage: unmark <index>";
+    private static final String INVALID_DELETE_ERROR = "Usage: delete <index>";
+    private static final String INVALID_DEADLINE_ERROR = "Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>";
+    private static final String INVALID_EVENT_ERROR = "Usage: event <task> /from <YYYY-MM-DD> <HHMM> "
+            + "/to <YYYY-MM-DD> <HHMM>";
+    private static final int COMMAND_MAIN_SEGMENTS = 2;
 
     /**
      * Returns executable Command subclasses.
@@ -33,7 +40,7 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parse(String input) throws InvalidFormatException {
-        String[] segments = input.trim().split(" ", 2);
+        String[] segments = input.trim().split(" ", COMMAND_MAIN_SEGMENTS);
         String action = segments[0];
 
         switch (action) {
@@ -42,18 +49,18 @@ public class Parser {
         case "bye":
             return new ByeCommand();
         case "mark":
-            if (segments.length != 2 || segments[1].isBlank()) {
-                throw new InvalidFormatException("Usage: mark <index>");
+            if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+                throw new InvalidFormatException(INVALID_MARK_ERROR);
             }
             return new MarkCommand(Integer.parseInt(segments[1]) - 1);
         case "unmark":
-            if (segments.length != 2 || segments[1].isBlank()) {
-                throw new InvalidFormatException("Usage: unmark <index>");
+            if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+                throw new InvalidFormatException(INVALID_UNMARK_ERROR);
             }
             return new UnmarkCommand(Integer.parseInt(segments[1]) - 1);
         case "delete":
-            if (segments.length != 2 || segments[1].isBlank()) {
-                throw new InvalidFormatException("Usage: delete <index>");
+            if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+                throw new InvalidFormatException(INVALID_DELETE_ERROR);
             }
             return new DeleteCommand(Integer.parseInt(segments[1]) - 1);
         case "todo":
@@ -77,18 +84,20 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parseDeadline(String[] segments) throws InvalidFormatException {
-        if (segments.length < 2 || segments[1].isBlank()) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
-        }
-        int byIndex = segments[1].indexOf("/by");
-        if (byIndex == -1) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
+        if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
         }
 
-        String deadline = segments[1].substring(byIndex + 4);
-        String taskName = segments[1].substring(0, byIndex).trim();
+        String option = "/by ";
+        int optionIndex = segments[1].indexOf(option);
+        if (optionIndex == -1) {
+            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
+        }
+
+        String deadline = segments[1].substring(optionIndex + option.length());
+        String taskName = segments[1].substring(0, optionIndex).trim();
         if (deadline.isEmpty() || taskName.isEmpty()) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
         }
 
         LocalDateTime date;
@@ -96,7 +105,7 @@ public class Parser {
             date = LocalDateTime.parse(deadline, OUTPUT_DATETIME_FORMAT);
             return new DeadlineCommand(taskName, date);
         } catch (DateTimeParseException e) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
         }
     }
 
@@ -108,22 +117,22 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parseEvent(String[] segments) throws InvalidFormatException {
-        if (segments.length < 2 || segments[1].isBlank()) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
+        if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+            throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
-        int fromIndex = segments[1].indexOf("/from");
-        int toIndex = segments[1].indexOf("/to");
+        String optionFrom = "/from ";
+        String optionTo = "/to ";
+        int fromIndex = segments[1].indexOf(optionFrom);
+        int toIndex = segments[1].indexOf(optionTo);
         if (fromIndex == -1 || toIndex == -1) {
-            throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
-                    + "/to <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
 
-        String from = segments[1].substring(fromIndex + 6, toIndex).trim();
-        String to = segments[1].substring(toIndex + 4).trim();
+        String from = segments[1].substring(fromIndex + optionFrom.length(), toIndex).trim();
+        String to = segments[1].substring(toIndex + optionTo.length()).trim();
         String taskName = segments[1].substring(0, fromIndex).trim();
         if (from.isEmpty() || to.isEmpty() || taskName.isEmpty()) {
-            throw new InvalidFormatException("Usage: event <task> /from <YYYY-MM-DD> <HHMM> "
-                    + "/to <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
 
         LocalDateTime fromDate;
@@ -132,8 +141,7 @@ public class Parser {
             fromDate = LocalDateTime.parse(from, OUTPUT_DATETIME_FORMAT);
             toDate = LocalDateTime.parse(to, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
-            throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
-                    + "/to <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
         return new EventCommand(taskName, fromDate, toDate);
     }

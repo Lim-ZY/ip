@@ -90,8 +90,8 @@ public class Ui {
     /**
      * Returns add task message.
      *
-     * @param t
-     * @param len
+     * @param t   Task object.
+     * @param len int value.
      */
     public static String getAddedTaskMessage(Task t, int len) {
         return "Got it. I've added this task:\n\t" + t.toString() + "\nNow you have " + len + " tasks in the list.";

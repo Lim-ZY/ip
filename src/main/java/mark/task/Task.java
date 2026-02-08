@@ -51,7 +51,7 @@ public class Task {
     @Override
     public String toString() {
         String doneState = this.isDone ? "X" : " ";
-        return String.valueOf("[" + doneState + "] " + this.name);
+        return "[" + doneState + "] " + this.name;
     }
 
     /**

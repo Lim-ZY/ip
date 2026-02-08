@@ -12,6 +12,10 @@ import mark.Ui;
  * Provides methods to add, delete, mark, unmark, and find tasks.
  */
 public class TaskList {
+    private static final String EMPTY_LIST_ERROR = "No tasks in the list.";
+    private static final String INVALID_ID_ERROR = "ID not defined. Please try again.";
+    private static final String NULL_KEYWORD_ERROR = "Keyword is null or empty.";
+
     private List<Task> tasks;
 
     /**
@@ -62,7 +66,7 @@ public class TaskList {
      */
     public void markDone(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
-            throw new MarkException("ID not defined. Please try again.");
+            throw new MarkException(INVALID_ID_ERROR);
         }
         this.tasks.get(id).markDone();
         Ui.markDone(this.tasks.get(id));
@@ -76,7 +80,7 @@ public class TaskList {
      */
     public void markUndone(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
-            throw new MarkException("ID not defined. Please try again.");
+            throw new MarkException(INVALID_ID_ERROR);
         }
         this.tasks.get(id).markUndone();
         Ui.markUndone(this.tasks.get(id));
@@ -90,7 +94,7 @@ public class TaskList {
      */
     public void delete(int id) throws MarkException {
         if (id >= tasks.size() || id < 0) {
-            throw new MarkException("ID not defined. Please try again.");
+            throw new MarkException(INVALID_ID_ERROR);
         }
         Ui.printDeletedTask(this.tasks.get(id), this.length() - 1);
         this.tasks.remove(id);
@@ -106,7 +110,7 @@ public class TaskList {
     public List<Task> find(String keyword) throws MarkException {
         List<Task> result = new ArrayList<>();
         if (keyword == null || keyword.isEmpty()) {
-            throw new MarkException("Keyword is null or empty.");
+            throw new MarkException(NULL_KEYWORD_ERROR);
         }
         for (Task t : this.tasks) {
             if (t.nameContains(keyword)) {
@@ -121,7 +125,7 @@ public class TaskList {
      */
     public void printTasks() {
         if (this.tasks.isEmpty()) {
-            Ui.println("No tasks in the list.");
+            Ui.println(EMPTY_LIST_ERROR);
             return;
         }
         Ui.print(this.toString());
@@ -134,7 +138,7 @@ public class TaskList {
     @Override
     public String toString() {
         if (this.tasks.isEmpty()) {
-            return "No tasks in the list.";
+            return EMPTY_LIST_ERROR;
         }
 
         StringBuilder sb = new StringBuilder();
