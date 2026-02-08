@@ -33,6 +33,8 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parse(String input) throws InvalidFormatException {
+        assert input != null : "argument to parse should be a valid String";
+
         String[] segments = input.trim().split(" ", 2);
         String action = segments[0];
 
@@ -76,7 +78,7 @@ public class Parser {
      * @return DeadlineCommand.
      * @throws InvalidFormatException when commands are invalid.
      */
-    public static Command parseDeadline(String[] segments) throws InvalidFormatException {
+    private static Command parseDeadline(String[] segments) throws InvalidFormatException {
         if (segments.length < 2 || segments[1].isBlank()) {
             throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
         }
@@ -107,9 +109,10 @@ public class Parser {
      * @return EventCommand.
      * @throws InvalidFormatException when commands are invalid.
      */
-    public static Command parseEvent(String[] segments) throws InvalidFormatException {
+    private static Command parseEvent(String[] segments) throws InvalidFormatException {
         if (segments.length < 2 || segments[1].isBlank()) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
+            throw new InvalidFormatException("usage: event <task> /from <YYYY-MM-DD> <HHMM> "
+                    + "/to <YYYY-MM-DD> <HHMM>");
         }
         int fromIndex = segments[1].indexOf("/from");
         int toIndex = segments[1].indexOf("/to");
