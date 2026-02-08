@@ -40,7 +40,9 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     public static Command parse(String input) throws InvalidFormatException {
-        String[] segments = input.trim().split(" ", COMMAND_MAIN_SEGMENTS);
+        assert input != null : "argument to parse should be a valid String";
+
+        String[] segments = input.trim().split(" ", 2);
         String action = segments[0];
 
         switch (action) {
@@ -83,9 +85,13 @@ public class Parser {
      * @return DeadlineCommand.
      * @throws InvalidFormatException when commands are invalid.
      */
-    public static Command parseDeadline(String[] segments) throws InvalidFormatException {
+    private static Command parseDeadline(String[] segments) throws InvalidFormatException {
         if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
             throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
+        }
+        int byIndex = segments[1].indexOf("/by");
+        if (byIndex == -1) {
+            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
         }
 
         String option = "/by ";
@@ -116,7 +122,7 @@ public class Parser {
      * @return EventCommand.
      * @throws InvalidFormatException when commands are invalid.
      */
-    public static Command parseEvent(String[] segments) throws InvalidFormatException {
+    private static Command parseEvent(String[] segments) throws InvalidFormatException {
         if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
             throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
