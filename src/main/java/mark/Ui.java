@@ -187,6 +187,15 @@ public class Ui {
         return "Here are the matching tasks in your list:\n" + sb.toString();
     }
 
+    public static void printUpdatedTask(int id, Task t) {
+        Ui.print(getUpdatedTaskMessage(id, t));
+        Ui.printDivider();
+    }
+
+    public static String getUpdatedTaskMessage(int id, Task t) {
+        return "Got it. I've updated this task:\n\t" + id + ". " + t.toString();
+    }
+
     /**
      * Prints error message if data file could not be loaded.
      */

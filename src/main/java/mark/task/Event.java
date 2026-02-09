@@ -12,8 +12,8 @@ public class Event extends Task {
      **/
     private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-    private final LocalDateTime fromDate;
-    private final LocalDateTime toDate;
+    private LocalDateTime fromDate;
+    private LocalDateTime toDate;
 
     /**
      * Returns Event object for the Event task.
@@ -40,6 +40,14 @@ public class Event extends Task {
     public Event(String name, boolean isDone, LocalDateTime from, LocalDateTime to) {
         super(name, isDone);
         this.fromDate = from;
+        this.toDate = to;
+    }
+
+    public void updateFromDate(LocalDateTime from) {
+        this.fromDate = from;
+    }
+
+    public void updateToDate(LocalDateTime to) {
         this.toDate = to;
     }
 

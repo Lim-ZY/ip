@@ -12,7 +12,7 @@ public class Deadline extends Task {
      **/
     private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
 
-    private final LocalDateTime deadline;
+    private LocalDateTime deadline;
 
     /**
      * Returns Deadline object for the Deadline task.
@@ -36,6 +36,10 @@ public class Deadline extends Task {
     public Deadline(String name, boolean isDone, LocalDateTime deadline) {
         super(name, isDone);
         this.deadline = deadline;
+    }
+
+    public void updateDeadline(LocalDateTime deadline) {
+       this.deadline = deadline;
     }
 
     @Override
