@@ -66,13 +66,19 @@ public class Parser {
             }
             return new DeleteCommand(Integer.parseInt(segments[1]) - 1);
         case "todo":
-            return new TodoCommand(segments);
+            if (segments.length != 2 || segments[1].isBlank()) {
+                throw new InvalidFormatException("Usage: todo <task>");
+            }
+            return new TodoCommand(segments[1]);
         case "deadline":
             return Parser.parseDeadline(segments);
         case "event":
             return Parser.parseEvent(segments);
         case "find":
-            return new FindCommand(segments);
+            if (segments.length != 2 || segments[1].isBlank()) {
+                throw new InvalidFormatException("Usage: find <keyword>");
+            }
+            return new FindCommand(segments[1]);
         default:
             return new UnknownCommand();
         }
