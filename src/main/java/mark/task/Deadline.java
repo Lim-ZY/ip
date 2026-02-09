@@ -39,7 +39,7 @@ public class Deadline extends Task {
     }
 
     public void updateDeadline(LocalDateTime deadline) {
-       this.deadline = deadline;
+        this.deadline = deadline;
     }
 
     @Override

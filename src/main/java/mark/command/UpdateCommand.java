@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import mark.InvalidFormatException;
 import mark.MarkException;
 import mark.Storage;
 import mark.Ui;
@@ -14,9 +13,13 @@ import mark.task.Task;
 import mark.task.TaskList;
 import mark.task.Todo;
 
+/**
+ * Represents a command which updates a specified task in the task list.
+ */
 public class UpdateCommand extends Command {
     private static final DateTimeFormatter OUTPUT_DATETIME_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-    private static final String INVALID_UPDATE_FORMAT_ERROR = "Please specify each valid update pair: <fieldName> <fieldValue>";
+    private static final String INVALID_UPDATE_FORMAT_ERROR = "Please specify each valid update pair: "
+            + "<fieldName> <fieldValue>";
 
     private int id;
     private Map<String, String> fieldValuePairs;
@@ -25,6 +28,12 @@ public class UpdateCommand extends Command {
         this.id = id;
     }
 
+    /**
+     * Returns an UpdateCommand with the task id to update, and a hashmap with fields to update.
+     *
+     * @param id int.
+     * @param fieldValuePairs Map of fields to values.
+     */
     public UpdateCommand(int id, Map<String, String> fieldValuePairs) {
         this.id = id;
         this.fieldValuePairs = fieldValuePairs;
