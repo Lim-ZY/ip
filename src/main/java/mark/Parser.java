@@ -3,6 +3,10 @@ package mark;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import mark.command.ByeCommand;
 import mark.command.Command;
@@ -15,6 +19,7 @@ import mark.command.MarkCommand;
 import mark.command.TodoCommand;
 import mark.command.UnknownCommand;
 import mark.command.UnmarkCommand;
+import mark.command.UpdateCommand;
 
 /**
  * Parses user input into Command objects.
@@ -27,10 +32,13 @@ public class Parser {
     private static final String INVALID_MARK_ERROR = "Usage: mark <index>";
     private static final String INVALID_UNMARK_ERROR = "Usage: unmark <index>";
     private static final String INVALID_DELETE_ERROR = "Usage: delete <index>";
-    private static final String INVALID_DEADLINE_ERROR = "Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>";
-    private static final String INVALID_EVENT_ERROR = "Usage: event <task> /from <YYYY-MM-DD> <HHMM> "
+    private static final String INVALID_DEADLINE_ERROR = "Usage: deadline <taskName> /by <YYYY-MM-DD> <HHMM>";
+    private static final String INVALID_EVENT_ERROR = "Usage: event <taskName> /from <YYYY-MM-DD> <HHMM> "
             + "/to <YYYY-MM-DD> <HHMM>";
+    private static final String INVALID_UPDATE_ERROR = "Usage: update <taskID> <taskFieldName> <taskFieldValue> ...";
     private static final int COMMAND_MAIN_SEGMENTS = 2;
+    private static final int MAX_FIELDS = 3;
+    private static final Pattern UPDATE_PATTERN = Pattern.compile("/([a-zA-Z]+)\\s+([^/]+)");
 
     /**
      * Returns executable Command subclasses.
@@ -66,16 +74,66 @@ public class Parser {
             }
             return new DeleteCommand(Integer.parseInt(segments[1]) - 1);
         case "todo":
-            return new TodoCommand(segments);
+            if (segments.length != 2 || segments[1].isBlank()) {
+                throw new InvalidFormatException("Usage: todo <task>");
+            }
+            return new TodoCommand(segments[1]);
         case "deadline":
             return Parser.parseDeadline(segments);
         case "event":
             return Parser.parseEvent(segments);
         case "find":
-            return new FindCommand(segments);
+            if (segments.length != 2 || segments[1].isBlank()) {
+                throw new InvalidFormatException("Usage: find <keyword>");
+            }
+            return new FindCommand(segments[1]);
+        case "update":
+            return Parser.parseUpdate(segments);
         default:
             return new UnknownCommand();
         }
+    }
+
+    private static Command parseUpdate(String[] segments) throws InvalidFormatException {
+        if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
+            throw new InvalidFormatException(INVALID_UPDATE_ERROR);
+        }
+
+        String[] idAndUpdates = segments[1].trim().split(" ", 2);
+        int taskID = getTaskId(idAndUpdates);
+        String updates = getUpdates(idAndUpdates);
+        Map<String, String> fieldValuePairs = getFieldValuePairs(updates);
+
+        return new UpdateCommand(taskID, fieldValuePairs);
+    }
+
+    private static int getTaskId(String[] idAndUpdates) throws InvalidFormatException {
+        int taskId = Integer.parseInt(idAndUpdates[0]) - 1;
+        if (idAndUpdates.length != 2 || idAndUpdates[1].isBlank()) {
+            throw new InvalidFormatException(INVALID_UPDATE_ERROR);
+        }
+        return taskId;
+    }
+
+    private static String getUpdates(String[] idAndUpdates) throws InvalidFormatException {
+        return idAndUpdates[1].trim();
+    }
+
+    private static Map<String, String> getFieldValuePairs(String updates) throws InvalidFormatException {
+        Map<String, String> fieldValuePairs = new HashMap<>();
+        Matcher updateMatcher = UPDATE_PATTERN.matcher(updates);
+        while (updateMatcher.find()) {
+            String fieldName = updateMatcher.group(1);
+            String fieldValue = updateMatcher.group(2).trim();
+            if (fieldValue.isEmpty()) {
+                throw new InvalidFormatException(INVALID_UPDATE_ERROR);
+            }
+            fieldValuePairs.put(fieldName, fieldValue);
+        }
+        if (fieldValuePairs.isEmpty()) {
+            throw new InvalidFormatException(INVALID_UPDATE_ERROR);
+        }
+        return fieldValuePairs;
     }
 
     /**

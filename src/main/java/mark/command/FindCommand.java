@@ -12,15 +12,14 @@ import mark.task.TaskList;
  * Represents a command which finds tasks with matching names from the task list.
  */
 public class FindCommand extends Command {
-    private final String[] input;
+    private final String keyword;
 
-    public FindCommand(String[] input) {
-        this.input = input;
+    public FindCommand(String keyword) {
+        this.keyword = keyword;
     }
 
     @Override
     public void execute(TaskList tasks, Storage storage) {
-        String keyword = input[1];
         try {
             List<Task> result = tasks.find(keyword);
             Ui.printTasksFound(result);

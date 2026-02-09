@@ -188,6 +188,17 @@ public class Ui {
     }
 
     /**
+     * Returns updated task as string.
+     *
+     * @param id Id of task.
+     * @param t Updated task.
+     * @return String representation of updated task.
+     */
+    public static String getUpdatedTaskMessage(int id, Task t) {
+        return "Got it. I've updated this task:\n\t" + id + ". " + t.toString();
+    }
+
+    /**
      * Prints error message if data file could not be loaded.
      */
     public static void showLoadingError() {

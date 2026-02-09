@@ -5,7 +5,7 @@ package mark.task;
  * Serves as a superclass for more specific tasks.
  */
 public class Task {
-    private final String name;
+    private String name;
     private boolean isDone;
 
     /**
@@ -46,6 +46,10 @@ public class Task {
 
     public boolean nameContains(String keyword) {
         return this.name.contains(keyword);
+    }
+
+    public void updateName(String name) {
+        this.name = name;
     }
 
     @Override
