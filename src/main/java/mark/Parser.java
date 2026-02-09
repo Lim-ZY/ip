@@ -98,20 +98,28 @@ public class Parser {
         if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
             throw new InvalidFormatException(INVALID_UPDATE_ERROR);
         }
-        String[] idAndUpdates = segments[1].trim().split(" ", 2);
 
-        int taskID;
-        String updates;
-        try {
-            taskID = Integer.parseInt(idAndUpdates[0]) - 1;
-            if (idAndUpdates.length != 2 || idAndUpdates[1].isBlank()) {
-                throw new InvalidFormatException(INVALID_UPDATE_ERROR);
-            }
-            updates = idAndUpdates[1].trim();
-        } catch (NumberFormatException e) {
+        String[] idAndUpdates = segments[1].trim().split(" ", 2);
+        int taskID = getTaskId(idAndUpdates);
+        String updates = getUpdates(idAndUpdates);
+        Map<String, String> fieldValuePairs = getFieldValuePairs(updates);
+
+        return new UpdateCommand(taskID, fieldValuePairs);
+    }
+
+    private static int getTaskId(String[] idAndUpdates) throws InvalidFormatException {
+        int taskId = Integer.parseInt(idAndUpdates[0]) - 1;
+        if (idAndUpdates.length != 2 || idAndUpdates[1].isBlank()) {
             throw new InvalidFormatException(INVALID_UPDATE_ERROR);
         }
+        return taskId;
+    }
 
+    private static String getUpdates(String[] idAndUpdates) throws InvalidFormatException {
+        return idAndUpdates[1].trim();
+    }
+
+    private static Map<String, String> getFieldValuePairs(String updates) throws InvalidFormatException {
         Map<String, String> fieldValuePairs = new HashMap<>();
         Matcher updateMatcher = UPDATE_PATTERN.matcher(updates);
         while (updateMatcher.find()) {
@@ -125,8 +133,7 @@ public class Parser {
         if (fieldValuePairs.isEmpty()) {
             throw new InvalidFormatException(INVALID_UPDATE_ERROR);
         }
-
-        return new UpdateCommand(taskID, fieldValuePairs);
+        return fieldValuePairs;
     }
 
     /**
