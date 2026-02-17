@@ -11,6 +11,11 @@ import mark.task.TaskList;
 public class DeleteCommand extends Command {
     private final int id;
 
+    /**
+     * Returns a DeleteCommand with the specified id.
+     *
+     * @param id ID of task in tasklist shown in UI to delete.
+     */
     public DeleteCommand(int id) {
         this.id = id;
     }

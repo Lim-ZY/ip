@@ -14,7 +14,7 @@ public class UnmarkCommand extends Command {
     /**
      * Returns an UnmarkCommand with the specified id.
      *
-     * @param id int.
+     * @param id ID of task in tasklist shown in UI to unmark.
      */
     public UnmarkCommand(int id) {
         this.id = id;

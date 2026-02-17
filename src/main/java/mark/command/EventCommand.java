@@ -18,8 +18,8 @@ public class EventCommand extends Command {
     /**
      * Returns an EventCommand with the specified taskName and date.
      *
-     * @param taskName String.
-     * @param fromDate LocalDateTime.
+     * @param taskName Name of event as a String.
+     * @param fromDate From date of event LocalDateTime.
      * @param toDate   LocalDateTime.
      */
     public EventCommand(String taskName, LocalDateTime fromDate, LocalDateTime toDate) {

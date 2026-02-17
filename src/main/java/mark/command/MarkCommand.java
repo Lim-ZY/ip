@@ -14,7 +14,7 @@ public class MarkCommand extends Command {
     /**
      * Returns a MarkCommand with the specified id.
      *
-     * @param id int.
+     * @param id ID of task in tasklist shown in UI to mark.
      */
     public MarkCommand(int id) {
         this.id = id;

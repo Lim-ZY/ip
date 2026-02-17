@@ -16,9 +16,8 @@ public class TodoCommand extends Command {
      * Returns a TodoCommand object.
      *
      * @param task User provided task.
-     * @throws InvalidFormatException if task field is blank.
      */
-    public TodoCommand(String task) throws InvalidFormatException {
+    public TodoCommand(String task) {
         this.taskName = task;
     }
 

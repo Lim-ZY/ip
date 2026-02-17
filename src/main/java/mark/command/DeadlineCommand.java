@@ -17,8 +17,8 @@ public class DeadlineCommand extends Command {
     /**
      * Returns a DeadlineCommand with the specified taskName and date.
      *
-     * @param taskName String.
-     * @param date     LocalDateTime.
+     * @param taskName Name of task as a String.
+     * @param date     Date of deadline as a LocalDateTime object.
      */
     public DeadlineCommand(String taskName, LocalDateTime date) {
         this.taskName = taskName;
