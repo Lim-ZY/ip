@@ -94,17 +94,10 @@ public class Parser {
         }
     }
 
-    private static Command parseUpdate(String[] segments) throws InvalidFormatException {
+    private static void validateSegments(String[] segments, String errorMessage) throws InvalidFormatException {
         if (segments.length != COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
-            throw new InvalidFormatException(INVALID_UPDATE_ERROR);
+            throw new InvalidFormatException(errorMessage);
         }
-
-        String[] idAndUpdates = segments[1].trim().split(" ", 2);
-        int taskID = getTaskId(idAndUpdates);
-        String updates = getUpdates(idAndUpdates);
-        Map<String, String> fieldValuePairs = getFieldValuePairs(updates);
-
-        return new UpdateCommand(taskID, fieldValuePairs);
     }
 
     private static int getTaskId(String[] idAndUpdates) throws InvalidFormatException {
@@ -136,6 +129,38 @@ public class Parser {
         return fieldValuePairs;
     }
 
+    private static String getArgument(String input, String flag, String nextFlag) throws InvalidFormatException {
+        int start = input.indexOf(flag);
+        if (start == -1) {
+            throw new InvalidFormatException("Missing " + flag);
+        }
+
+        start += flag.length();
+        int end = (nextFlag != null) ? input.indexOf(nextFlag) : input.length();
+
+        if (end == -1 || end < start) {
+            throw new InvalidFormatException("Invalid format for " + nextFlag);
+        }
+
+        String result = input.substring(start, end).trim();
+        if (result.isEmpty()) {
+            throw new InvalidFormatException("Empty value for " + flag);
+        }
+
+        return result;
+    }
+
+    private static Command parseUpdate(String[] segments) throws InvalidFormatException {
+        validateSegments(segments, INVALID_UPDATE_ERROR);
+
+        String[] idAndUpdates = segments[1].trim().split(" ", 2);
+        int taskID = getTaskId(idAndUpdates);
+        String updates = getUpdates(idAndUpdates);
+        Map<String, String> fieldValuePairs = getFieldValuePairs(updates);
+
+        return new UpdateCommand(taskID, fieldValuePairs);
+    }
+
     /**
      * Returns executable DeadlineCommand upon further parsing of input segments.
      *
@@ -144,33 +169,23 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     private static Command parseDeadline(String[] segments) throws InvalidFormatException {
-        if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
-            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
-        }
-        int byIndex = segments[1].indexOf("/by");
-        if (byIndex == -1) {
-            throw new InvalidFormatException("Usage: deadline <task> /by <YYYY-MM-DD> <HHMM>");
-        }
+        validateSegments(segments, INVALID_DEADLINE_ERROR);
+        String input = segments[1];
 
-        String option = "/by ";
-        int optionIndex = segments[1].indexOf(option);
-        if (optionIndex == -1) {
-            throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
-        }
-
-        String deadline = segments[1].substring(optionIndex + option.length());
-        String taskName = segments[1].substring(0, optionIndex).trim();
-        if (deadline.isEmpty() || taskName.isEmpty()) {
+        String flag = "/by ";
+        String byString = getArgument(input, flag, null);
+        String taskName = input.substring(0, input.indexOf(flag)).trim();
+        if (taskName.isEmpty()) {
             throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
         }
 
         LocalDateTime date;
         try {
-            date = LocalDateTime.parse(deadline, OUTPUT_DATETIME_FORMAT);
-            return new DeadlineCommand(taskName, date);
+            date = LocalDateTime.parse(byString, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
             throw new InvalidFormatException(INVALID_DEADLINE_ERROR);
         }
+        return new DeadlineCommand(taskName, date);
     }
 
     /**
@@ -181,29 +196,21 @@ public class Parser {
      * @throws InvalidFormatException when commands are invalid.
      */
     private static Command parseEvent(String[] segments) throws InvalidFormatException {
-        if (segments.length < COMMAND_MAIN_SEGMENTS || segments[1].isBlank()) {
-            throw new InvalidFormatException(INVALID_EVENT_ERROR);
-        }
-        String optionFrom = "/from ";
-        String optionTo = "/to ";
-        int fromIndex = segments[1].indexOf(optionFrom);
-        int toIndex = segments[1].indexOf(optionTo);
-        if (fromIndex == -1 || toIndex == -1) {
-            throw new InvalidFormatException(INVALID_EVENT_ERROR);
-        }
+        validateSegments(segments, INVALID_EVENT_ERROR);
+        String input = segments[1];
 
-        String from = segments[1].substring(fromIndex + optionFrom.length(), toIndex).trim();
-        String to = segments[1].substring(toIndex + optionTo.length()).trim();
-        String taskName = segments[1].substring(0, fromIndex).trim();
-        if (from.isEmpty() || to.isEmpty() || taskName.isEmpty()) {
-            throw new InvalidFormatException(INVALID_EVENT_ERROR);
-        }
+        String flagFrom = "/from ";
+        String flagTo = "/to ";
+
+        String fromString = getArgument(input, flagFrom, flagTo);
+        String toString = getArgument(input, flagTo, null);
+        String taskName = segments[1].substring(0, input.indexOf(flagFrom)).trim();
 
         LocalDateTime fromDate;
         LocalDateTime toDate;
         try {
-            fromDate = LocalDateTime.parse(from, OUTPUT_DATETIME_FORMAT);
-            toDate = LocalDateTime.parse(to, OUTPUT_DATETIME_FORMAT);
+            fromDate = LocalDateTime.parse(fromString, OUTPUT_DATETIME_FORMAT);
+            toDate = LocalDateTime.parse(toString, OUTPUT_DATETIME_FORMAT);
         } catch (DateTimeParseException e) {
             throw new InvalidFormatException(INVALID_EVENT_ERROR);
         }
