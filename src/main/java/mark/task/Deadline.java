@@ -2,6 +2,9 @@ package mark.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
+import mark.MarkException;
 
 /**
  * Represents a task with a deadline.
@@ -38,8 +41,21 @@ public class Deadline extends Task {
         this.deadline = deadline;
     }
 
-    public void updateDeadline(LocalDateTime deadline) {
-        this.deadline = deadline;
+    @Override
+    public void update(Map<String, String> fields, String errorMessage) throws MarkException {
+        for (String fieldName : fields.keySet()) {
+            switch (fieldName) {
+            case "taskName":
+                super.update(fields, errorMessage);
+                break;
+            case "by":
+                String by = fields.get("by");
+                this.deadline = LocalDateTime.parse(by, OUTPUT_DATETIME_FORMAT);
+                break;
+            default:
+                throw new MarkException(errorMessage);
+            }
+        }
     }
 
     @Override

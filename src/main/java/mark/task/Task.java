@@ -1,5 +1,9 @@
 package mark.task;
 
+import java.util.Map;
+
+import mark.MarkException;
+
 /**
  * Represents a general task with a name and done status.
  * Serves as a superclass for more specific tasks.
@@ -50,6 +54,19 @@ public class Task {
 
     public void updateName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Updates task name and throws MarkException with the specified errorMessage.
+     *
+     * @param fields Map of fields in task to their requested update value.
+     * @param errorMessage Error message to pass to MarkException.
+     */
+    public void update(Map<String, String> fields, String errorMessage) throws MarkException {
+        if (!fields.containsKey("taskName")) {
+            throw new MarkException(errorMessage);
+        }
+        this.name = fields.get("taskName");
     }
 
     @Override

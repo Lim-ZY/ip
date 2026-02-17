@@ -2,6 +2,9 @@ package mark.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
+
+import mark.MarkException;
 
 /**
  * Represents a task that occurs over a specific duration.
@@ -43,12 +46,25 @@ public class Event extends Task {
         this.toDate = to;
     }
 
-    public void updateFromDate(LocalDateTime from) {
-        this.fromDate = from;
-    }
-
-    public void updateToDate(LocalDateTime to) {
-        this.toDate = to;
+    @Override
+    public void update(Map<String, String> fields, String errorMessage) throws MarkException {
+        for (String fieldName : fields.keySet()) {
+            switch (fieldName) {
+            case "taskName":
+                super.update(fields, errorMessage);
+                break;
+            case "from":
+                String from = fields.get("from");
+                this.fromDate = LocalDateTime.parse(from, OUTPUT_DATETIME_FORMAT);
+                break;
+            case "to":
+                String to = fields.get("to");
+                this.toDate = LocalDateTime.parse(to, OUTPUT_DATETIME_FORMAT);
+                break;
+            default:
+                throw new MarkException(errorMessage);
+            }
+        }
     }
 
     @Override

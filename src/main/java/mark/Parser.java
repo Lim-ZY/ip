@@ -115,7 +115,7 @@ public class Parser {
         return taskId;
     }
 
-    private static String getUpdates(String[] idAndUpdates) throws InvalidFormatException {
+    private static String getUpdates(String[] idAndUpdates) {
         return idAndUpdates[1].trim();
     }
 

@@ -1,5 +1,9 @@
 package mark.task;
 
+import java.util.Map;
+
+import mark.MarkException;
+
 /**
  * Represents a Todo task.
  */
@@ -22,6 +26,11 @@ public class Todo extends Task {
      */
     public Todo(String name, boolean isDone) {
         super(name, isDone);
+    }
+
+    @Override
+    public void update(Map<String, String> fields, String errorMessage) throws MarkException {
+        super.update(fields, errorMessage);
     }
 
     @Override
