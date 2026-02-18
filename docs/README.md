@@ -32,7 +32,8 @@ of a Graphical User Interface (GUI).
 ---
 
 ## Features
-> [!Note]
+
+> [!NOTE]  
 > **Notes about the command format:**
 > * Words in angled brackets `<>` are the parameters to be supplied by the user.
 >   * e.g. in `todo <taskName>`, `<taskName>` is a parameter: `todo read book`.
