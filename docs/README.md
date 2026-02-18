@@ -1,6 +1,6 @@
 # Mark User Guide
 
-// Product screenshot goes here
+![Product screenshot of Mark](https://Lim-ZY.github.io/ip/Ui.png)
 
 Mark is a desktop app for managing tasks, such as to-dos, deadlines, and events.
 It is optimised for use via a Command Line Interface (CLI) while still having the benefits
@@ -14,8 +14,9 @@ of a Graphical User Interface (GUI).
   * [Listing all tasks: `list`](#listing-all-tasks-list)
   * [Updating a task: `update`](#updating-a-task-update)
   * [Exiting the program: `bye`](#exiting-the-program-bye)
-* FAQ
+* [FAQ](#faq)
 * [Command Summary](#command-summary)
+
 ---
 ## Quick Start
 1. Ensure you have Java 17 or above installed on your computer.
