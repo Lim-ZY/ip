@@ -13,6 +13,9 @@ of a Graphical User Interface (GUI).
   * [Adding a Todo: `todo`](#adding-a-todo-todo)
   * [Adding a Deadline: `deadline`](#adding-a-deadline-deadline)
   * [Adding an event: `event`](#adding-an-event-event)
+  * [Marking/Unmarking a task as Done: `mark`/`unmark`](#markingunmarking-a-task-as-done-mark--unmark)
+  * [Deleting a task: `delete`](#deleting-a-task-delete)
+  * [Finding a task: `find`](#finding-a-task-find)
   * [Listing all tasks: `list`](#listing-all-tasks-list)
   * [Updating a task: `update`](#updating-a-task-update)
   * [Exiting the program: `bye`](#exiting-the-program-bye)
@@ -55,6 +58,21 @@ Adds a task that starts and ends at specific times.
 * **Format:** `event <taskName> /from <YYYY-MM-DD> <HHMM> /to <YYYY-MM-DD> <HHMM>`
 * **Example:** `event Meet to eat /from 2030-01-31 1200 /to 2030-01-31 1400`
 
+### Marking/Unmarking a task as Done: `mark` / `unmark`
+Marks/unmarks a task as done.
+* **Format:** `mark <taskID>` / `unmark <taskID>`
+* **Example:** `mark 3`
+
+### Deleting a task: `delete`
+Deletes a task.
+* **Format:** `delete <taskID>`
+* **Example:** `delete 3`
+
+### Finding a task: `find`
+Finds a task corresponding to a keyword.
+* **Format:** `find <keyword>`
+* **Example:** `find cat`
+
 ### Listing all tasks: `list`
 Shows a list of all current tasks in the task list.
 * **Format:** `list`
@@ -81,11 +99,14 @@ to third-party cloud services.
 
 ## Command Summary
 
-| :Action        | :Command                                                             | :Example                                                      |
-|----------------|----------------------------------------------------------------------|---------------------------------------------------------------|
-| Add a Todo     | `todo <taskName>`                                                    | `todo Feed my cat`                                            |
-| Add a Deadline | `deadline <taskName> /by <YYYY-MM-DD> <HHMM>`                        | `deadline Submit application /by 2030-01-31 2359`             |
-| Add an Event   | `event <taskName> /from <YYYY-MM-DD> <HHMM> /to <YYYY-MM-DD> <HHMM>` | `event Meet to eat /from 2030-01-31 1200 /to 2030-01-31 1400` |
-| List all tasks | `list`                                                               | - |
-| Update a task  | `update <taskID> <taskFieldName> <taskFieldValue> ...`               | `update 3 /taskName Feed my dog` |
-| Exit           | `bye`                                                                | - |
+| :Action            | :Command                                                             | :Example                                                      |
+|--------------------|----------------------------------------------------------------------|---------------------------------------------------------------|
+| Add a Todo         | `todo <taskName>`                                                    | `todo Feed my cat`                                            |
+| Add a Deadline     | `deadline <taskName> /by <YYYY-MM-DD> <HHMM>`                        | `deadline Submit application /by 2030-01-31 2359`             |
+| Add an Event       | `event <taskName> /from <YYYY-MM-DD> <HHMM> /to <YYYY-MM-DD> <HHMM>` | `event Meet to eat /from 2030-01-31 1200 /to 2030-01-31 1400` |
+| Mark/unmark a task | `mark` / `unmark`                                                    | `mark 3` / `unmark 3`                                         |
+| Delete a task      | `delete`                                                             | `delete 3`                                                    |
+| Find a task        | `find`                                                               | `find cat`                                                    |
+| List all tasks     | `list`                                                               | -                                                             |
+| Update a task      | `update <taskID> <taskFieldName> <taskFieldValue> ...`               | `update 3 /taskName Feed my dog`                              |
+| Exit               | `bye`                                                                | -                                                             |
