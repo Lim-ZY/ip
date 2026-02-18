@@ -70,11 +70,11 @@ Exits the application.
 ---
 
 ## FAQ
-**Q: How do I save my tasks?**
-**A:** Mark saves your data automatically to the hard disk after you end the session. You don't need to save manually.
-**Q: Where is my data stored?**
+**Q: How do I save my tasks?**  
+**A:** Mark saves your data automatically to the hard disk after you end the session. You don't need to save manually.  
+**Q: Where is my data stored?**  
 **A:** Data is stored locally in a text file within the same directory as the application. No data will be sent
-to third-party cloud services.
+to third-party cloud services.  
 
 ---
 
