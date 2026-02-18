@@ -37,7 +37,6 @@ public class Parser {
             + "/to <YYYY-MM-DD> <HHMM>";
     private static final String INVALID_UPDATE_ERROR = "Usage: update <taskID> <taskFieldName> <taskFieldValue> ...";
     private static final int COMMAND_MAIN_SEGMENTS = 2;
-    private static final int MAX_FIELDS = 3;
     private static final Pattern UPDATE_PATTERN = Pattern.compile("/([a-zA-Z]+)\\s+([^/]+)");
 
     /**

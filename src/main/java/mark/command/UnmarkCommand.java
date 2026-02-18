@@ -27,6 +27,7 @@ public class UnmarkCommand extends Command {
             this.response = Ui.getMarkUndoneMessage(tasks.getTask(this.id));
         } catch (MarkException e) {
             Ui.printException(e);
+            this.response = e.getMessage();
         }
     }
 }

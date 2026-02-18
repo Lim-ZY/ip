@@ -27,6 +27,7 @@ public class MarkCommand extends Command {
             this.response = Ui.getMarkDoneMessage(tasks.getTask(this.id));
         } catch (MarkException e) {
             Ui.printException(e);
+            this.response = e.getMessage();
         }
     }
 }
